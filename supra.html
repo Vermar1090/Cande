@@ -3,147 +3,667 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./public/css/main.css">
-    <title>Admin Heladería</title>
- 
+    <title>Generador de Códigos QR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #202122;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header estilo Wikipedia */
+        .header {
+            background: white;
+            border-bottom: 3px solid #a2a9b1;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: normal;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            color: #54595d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.8em;
+            color: #0645ad;
+        }
+
+        .breadcrumb a {
+            color: #0645ad;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar estilo Wikipedia */
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            border: 1px solid #a2a9b1;
+            padding: 20px;
+            height: fit-content;
+            border-radius: 3px;
+        }
+
+        .sidebar h3 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 5px;
+        }
+
+        .sidebar .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .nav-item a {
+            color: #0645ad;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .sidebar .nav-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contenido principal */
+        .content {
+            flex: 1;
+            background: white;
+            border: 1px solid #a2a9b1;
+            padding: 30px;
+            border-radius: 3px;
+        }
+
+        .content h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 5px;
+        }
+
+        /* Formulario estilo Wikipedia */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="url"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #a2a9b1;
+            border-radius: 2px;
+            font-size: 0.9em;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="url"]:focus {
+            outline: none;
+            border-color: #36c;
+            box-shadow: 0 0 0 1px #36c;
+        }
+
+        .form-group input[type="range"] {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .range-value {
+            font-size: 0.8em;
+            color: #54595d;
+            margin-left: 10px;
+        }
+
+        /* Botones estilo Wikipedia */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid #a2a9b1;
+            background: #f8f9fa;
+            color: #202122;
+            text-decoration: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background: #e8eaed;
+            border-color: #72777d;
+        }
+
+        .btn-primary {
+            background: #0645ad;
+            color: white;
+            border-color: #0645ad;
+        }
+
+        .btn-primary:hover {
+            background: #0b5394;
+            border-color: #0b5394;
+        }
+
+        .btn-danger {
+            background: #d33;
+            color: white;
+            border-color: #d33;
+        }
+
+        .btn-danger:hover {
+            background: #b32424;
+            border-color: #b32424;
+        }
+
+        /* Área de resultado */
+        .result-area {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .qr-display {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #a2a9b1;
+            background: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+
+        /* Logo preview */
+        .logo-preview {
+            max-width: 80px;
+            max-height: 80px;
+            border: 1px solid #a2a9b1;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        /* Tabla de información */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .info-table th,
+        .info-table td {
+            border: 1px solid #a2a9b1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .info-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        /* Canvas oculto */
+        #canvas {
+            display: none;
+        }
+
+        /* Estilos para múltiples QR */
+        .qr-item {
+            text-align: center;
+            border: 1px solid #a2a9b1;
+            padding: 15px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .qr-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .qr-item .qr-info {
+            font-size: 0.8em;
+            color: #54595d;
+            margin-top: 10px;
+        }
+
+        /* Estilos para impresión */
+        .print-view {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .print-view.active {
+            display: block;
+        }
+
+        .print-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .print-qr-item {
+            text-align: center;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            page-break-inside: avoid;
+        }
+
+        .print-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media print {
+            .print-controls {
+                display: none !important;
+            }
+            
+            .print-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                order: 2;
+            }
+            
+            .content {
+                order: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🍦 Heladería</h1>
-            <p>Sistema de gestión simple</p>
-        </div>
-        
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('configuracion')">Configuración</button>
-            <button class="tab-btn" onclick="showTab('categorias')">Categorías</button>
-            <button class="tab-btn" onclick="showTab('productos')">Productos</button>
-            <a href="./qr.html" class="tab-btn" >Generar QR</a>
-        </div>
-        
-        <!-- Configuración de Almacenamiento -->
-        <div id="configuracion" class="tab-content active">
-            <div class="storage-info">
-                <h4>📷 Configuración de Imágenes</h4>
-                <p>Configura el bucket de Supabase Storage para subir imágenes:</p>
+    <div class="header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="./supra.html">Inicio</a>  > Generador de Códigos QR
             </div>
-            
-            <div class="form-section">
-                <h4>Configuración de Supabase Storage</h4>
-                <div class="form-group">
-                    <label>Nombre del Bucket</label>
-                    <input type="text" id="bucketName" value="productos-imagenes" placeholder="productos-imagenes">
-                </div>
-                <button class="btn" onclick="testStorageConnection()">Probar Conexión</button>
-                <div id="connectionStatus" class="message" style="display: none;"></div>
-            </div>
-            
-            <div class="supported-formats">
-                <h5>📸 Formatos de Imagen Soportados</h5>
-                <p>El sistema ahora acepta todos los tipos de imagen comunes:</p>
-                <div class="format-grid">
-                    <div class="format-item">JPG/JPEG</div>
-                    <div class="format-item">PNG</div>
-                    <div class="format-item">GIF</div>
-                    <div class="format-item">WEBP</div>
-                    <div class="format-item">SVG</div>
-                    <div class="format-item">BMP</div>
-                    <div class="format-item">TIFF</div>
-                    <div class="format-item">ICO</div>
-                    <div class="format-item">AVIF</div>
-                </div>
-            </div>
-            
-            <div class="storage-info">
-                <h4>Pasos para configurar Supabase Storage:</h4>
-                <ul>
-                    <li>Ve a tu proyecto en Supabase Dashboard</li>
-                    <li>Navega a Storage y crea un bucket llamado "productos-imagenes"</li>
-                    <li>Configura las políticas de acceso público para el bucket</li>
-                    <li>Haz clic en "Probar Conexión" para verificar</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Categorías -->
-        <div id="categorias" class="tab-content">
-            <div class="form-section">
-                <h3>Nueva Categoría</h3>
-                <form id="categoriaForm">
-                    <input type="hidden" id="categoriaId">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="categoriaNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea id="categoriaDescripcion" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="btn">Guardar</button>
-                    <button type="button" class="btn btn-danger" onclick="limpiarFormularioCategoria()">Limpiar</button>
-                </form>
-            </div>
-            
-            <div id="categoriasList" class="items-list">
-                <div class="loading">Cargando categorías...</div>
-            </div>
-        </div>
-        
-        <!-- Productos -->
-        <div id="productos" class="tab-content">
-            <div class="form-section">
-                <h3>Nuevo Producto</h3>
-                <form id="productoForm">
-                    <input type="hidden" id="productoId">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="productoNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Categoría</label>
-                        <select id="productoCategoria" required>
-                            <option value="">Seleccionar categoría</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea id="productoDescripcion" rows="2"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Precio ($)</label>
-                        <input type="number" id="productoPrecio" step="0.01" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Imagen del Producto</label>
-                        <input type="file" id="productoImagenFile" accept="image/*" onchange="handleFileUpload(this)">
-                        <div class="file-info" id="fileInfo" style="display: none;"></div>
-                        <div class="upload-progress" id="uploadProgress">
-                            <div class="upload-progress-bar" id="uploadProgressBar"></div>
-                        </div>
-                        <img id="imagePreview" class="image-preview" style="display: none;">
-                        <input type="hidden" id="productoImagen">
-                    </div>
-                    
-                    <button type="submit" class="btn" id="submitBtn">Guardar</button>
-                    <button type="button" class="btn btn-danger" onclick="limpiarFormularioProducto()">Limpiar</button>
-                </form>
-            </div>
-            
-            <div id="productosList" class="items-list">
-                <div class="loading">Cargando productos...</div>
-            </div>
-        </div>
-
-
-
-        <div class="tab-content" id="qr">
-
+            <h1>Generador de Códigos QR</h1>
+            <div class="subtitle">Herramienta para crear códigos QR personalizados con logo</div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./public/js/main.js"></script>
-  
+    <div class="container">
+        <div class="main-content">
+            <div class="sidebar">
+                <h3>Navegación</h3>
+                <div class="nav-item"><a href="#generador">Generador</a></div>
+                <div class="nav-item"><a href="#configuracion">Configuración</a></div>
+                <div class="nav-item"><a href="#resultado">Resultado</a></div>
+                <div class="nav-item"><a href="#descargar">Descargar</a></div>
+                
+                <h3>Información</h3>
+                <div class="nav-item"><a href="#que-es-qr">¿Qué es un QR?</a></div>
+                <div class="nav-item"><a href="#usos">Usos comunes</a></div>
+                <div class="nav-item"><a href="#consejos">Consejos</a></div>
+                
+                <h3>Herramientas</h3>
+                <div class="nav-item"><a href="#validador">Validador de URLs</a></div>
+                <div class="nav-item"><a href="#historial">Historial</a></div>
+            </div>
+
+            <div class="content">
+                <h2 id="generador">Generador de Códigos QR</h2>
+                
+                <div class="form-group">
+                    <label for="url-input">URL o Texto a codificar:</label>
+                    <label for="a">url : https://vermar1090.github.io/Cande/</label>
+                    <input type="text" id="url-input" placeholder="https://ejemplo.com o cualquier texto">
+                    <small style="color: #54595d; font-size: 0.8em;">Ingresa una URL válida o cualquier texto que quieras convertir en código QR</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="qr-size">Tamaño del código QR: <span class="range-value" id="qr-size-value">300px</span></label>
+                    <input type="range" id="qr-size" min="200" max="600" value="300">
+                </div>
+
+                <div class="form-group">
+                    <label for="logo-input">Logo (opcional):</label>
+                    <input type="file" id="logo-input" accept="image/*">
+                    <div id="logo-preview-container"></div>
+                </div>
+
+                <div class="form-group" id="logo-size-group" style="display: none;">
+                    <label for="logo-size">Tamaño del logo: <span class="range-value" id="logo-size-value">60px</span></label>
+                    <input type="range" id="logo-size" min="30" max="120" value="60">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity-input">Cantidad de códigos QR a generar:</label>
+                    <input type="number" id="quantity-input" min="1" max="50" value="1" style="width: 100px;">
+                    <small style="color: #54595d; font-size: 0.8em; margin-left: 10px;">Máximo 50 códigos QR por vez</small>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="generateQR()">Generar Código QR</button>
+                    <button class="btn" onclick="generateMultipleQR()">Generar Múltiples QR</button>
+                    <button class="btn" onclick="clearForm()">Limpiar Formulario</button>
+                    <button class="btn" onclick="printQRCodes()" id="print-btn" style="display: none;">Imprimir Todos</button>
+                </div>
+
+                <div class="loading" id="loading">
+                    <p>Generando código QR...</p>
+                </div>
+
+                <div class="result-area" id="result-area" style="display: none;">
+                    <h3>Código QR Generado</h3>
+                    <img id="qr-image" class="qr-display" alt="Código QR generado">
+                    <br>
+                    <button class="btn btn-primary" onclick="downloadQR()">Descargar PNG</button>
+                    
+                    <table class="info-table">
+                        <tr>
+                            <th>Información</th>
+                            <th>Valor</th>
+                        </tr>
+                        <tr>
+                            <td>Contenido</td>
+                            <td id="qr-content"></td>
+                        </tr>
+                        <tr>
+                            <td>Tamaño</td>
+                            <td id="qr-size-info"></td>
+                        </tr>
+                        <tr>
+                            <td>Con logo</td>
+                            <td id="qr-logo-info"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de creación</td>
+                            <td id="qr-date"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="result-area" id="multiple-result-area" style="display: none;">
+                    <h3>Códigos QR Generados para Imprimir</h3>
+                    <p>Total de códigos generados: <span id="total-qr-count">0</span></p>
+                    <div id="qr-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                    </div>
+                    <button class="btn btn-primary" onclick="downloadAllQR()">Descargar Todos (ZIP)</button>
+                    <button class="btn" onclick="printQRCodes()">Vista de Impresión</button>
+                </div>
+
+                <h2 id="que-es-qr">¿Qué es un Código QR?</h2>
+                <p>Un <strong>código QR</strong> (Quick Response) es un tipo de código de barras bidimensional que puede almacenar información como URLs, texto, números de teléfono, y más. Fue desarrollado en 1994 por Denso Wave para el rastreo de vehículos durante la fabricación.</p>
+                
+                <h2 id="usos">Usos Comunes</h2>
+                <ul>
+                    <li><strong>Marketing:</strong> Enlaces a sitios web, cupones de descuento</li>
+                    <li><strong>Contacto:</strong> Información de contacto, tarjetas de visita</li>
+                    <li><strong>Pagos:</strong> Sistemas de pago móvil</li>
+                    <li><strong>Eventos:</strong> Tickets digitales, información de eventos</li>
+                    <li><strong>Educación:</strong> Enlaces a recursos educativos</li>
+                </ul>
+
+                <h2 id="consejos">Consejos para Crear Códigos QR Efectivos</h2>
+                <ol>
+                    <li>Usa URLs cortas para QR más simples</li>
+                    <li>Asegúrate de que el contraste sea suficiente</li>
+                    <li>Prueba el código QR antes de distribuirlo</li>
+                    <li>Si usas logo, mantenlo pequeño (no más del 30% del QR)</li>
+                    <li>Considera el tamaño de impresión final</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <!-- Vista de impresión -->
+    <div class="print-view" id="print-view">
+        <div class="print-controls">
+            <button class="btn" onclick="closePrintView()">Cerrar</button>
+            <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        </div>
+        <h2 style="text-align: center; margin-bottom: 30px;">Códigos QR para Imprimir</h2>
+        <div id="print-grid" class="print-grid"></div>
+    </div>
+
+    <script>
+        let currentLogo = null;
+        let logoPreview = null;
+
+        // Actualizar valores de los sliders
+        document.getElementById('qr-size').addEventListener('input', function() {
+            document.getElementById('qr-size-value').textContent = this.value + 'px';
+        });
+
+        document.getElementById('logo-size').addEventListener('input', function() {
+            document.getElementById('logo-size-value').textContent = this.value + 'px';
+        });
+
+        // Manejar subida de logo
+        document.getElementById('logo-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentLogo = e.target.result;
+                        showLogoPreview(e.target.result);
+                        document.getElementById('logo-size-group').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Por favor selecciona un archivo de imagen válido');
+                }
+            }
+        });
+
+        function showLogoPreview(src) {
+            const container = document.getElementById('logo-preview-container');
+            container.innerHTML = `
+                <img src="${src}" class="logo-preview" alt="Vista previa del logo">
+                <button class="btn btn-danger" onclick="clearLogo()" style="margin-left: 10px;">Eliminar Logo</button>
+            `;
+        }
+
+        function clearLogo() {
+            currentLogo = null;
+            document.getElementById('logo-input').value = '';
+            document.getElementById('logo-preview-container').innerHTML = '';
+            document.getElementById('logo-size-group').style.display = 'none';
+        }
+
+        function clearForm() {
+            document.getElementById('url-input').value = '';
+            clearLogo();
+            document.getElementById('result-area').style.display = 'none';
+            document.getElementById('qr-size').value = 300;
+            document.getElementById('qr-size-value').textContent = '300px';
+            document.getElementById('logo-size').value = 60;
+            document.getElementById('logo-size-value').textContent = '60px';
+        }
+
+        async function generateQR() {
+            const url = document.getElementById('url-input').value.trim();
+            const qrSize = parseInt(document.getElementById('qr-size').value);
+            const logoSize = parseInt(document.getElementById('logo-size').value);
+
+            if (!url) {
+                alert('Por favor ingresa una URL o texto válido');
+                return;
+            }
+
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('result-area').style.display = 'none';
+
+            try {
+                // Generar QR básico usando API pública
+                const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(url)}&format=png&margin=10`;
+                
+                const response = await fetch(qrApiUrl);
+                const blob = await response.blob();
+                
+                const qrDataUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+
+                let finalQR = qrDataUrl;
+
+                // Si hay logo, combinarlo con el QR
+                if (currentLogo) {
+                    finalQR = await combineQRWithLogo(qrDataUrl, currentLogo, qrSize, logoSize);
+                }
+
+                // Mostrar resultado
+                document.getElementById('qr-image').src = finalQR;
+                document.getElementById('qr-content').textContent = url;
+                document.getElementById('qr-size-info').textContent = `${qrSize}x${qrSize}px`;
+                document.getElementById('qr-logo-info').textContent = currentLogo ? 'Sí' : 'No';
+                document.getElementById('qr-date').textContent = new Date().toLocaleString();
+                
+                document.getElementById('result-area').style.display = 'block';
+                document.getElementById('loading').classList.remove('active');
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al generar el código QR. Verifica tu conexión a internet.');
+                document.getElementById('loading').classList.remove('active');
+            }
+        }
+
+        function combineQRWithLogo(qrDataUrl, logoDataUrl, qrSize, logoSize) {
+            return new Promise((resolve) => {
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = qrSize;
+                canvas.height = qrSize;
+
+                const qrImage = new Image();
+                qrImage.onload = () => {
+                    // Dibujar el QR de fondo
+                    ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
+                    
+                    const logoImage = new Image();
+                    logoImage.onload = () => {
+                        // Calcular posición centrada
+                        const logoX = (qrSize - logoSize) / 2;
+                        const logoY = (qrSize - logoSize) / 2;
+                        
+                        // Crear fondo blanco circular para el logo
+                        ctx.fillStyle = 'white';
+                        ctx.beginPath();
+                        ctx.arc(qrSize / 2, qrSize / 2, (logoSize / 2) + 8, 0, 2 * Math.PI);
+                        ctx.fill();
+                        
+                        // Agregar borde
+                        ctx.strokeStyle = '#333';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                        
+                        // Dibujar el logo
+                        ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
+                        
+                        resolve(canvas.toDataURL('image/png'));
+                    };
+                    logoImage.src = logoDataUrl;
+                };
+                qrImage.src = qrDataUrl;
+            });
+        }
+
+        function downloadQR() {
+            const qrImage = document.getElementById('qr-image');
+            if (qrImage.src) {
+                const link = document.createElement('a');
+                link.download = 'codigo-qr.png';
+                link.href = qrImage.src;
+                link.click();
+            }
+        }
+
+        // Navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
