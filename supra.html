@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./public/css/main.css">
+    <title>Admin Heladería</title>
+ 
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍦 Heladería</h1>
+            <p>Sistema de gestión simple</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('configuracion')">Configuración</button>
+            <button class="tab-btn" onclick="showTab('categorias')">Categorías</button>
+            <button class="tab-btn" onclick="showTab('productos')">Productos</button>
+            <a href="./qr.html" class="tab-btn" >Generar QR</a>
+        </div>
+        
+        <!-- Configuración de Almacenamiento -->
+        <div id="configuracion" class="tab-content active">
+            <div class="storage-info">
+                <h4>📷 Configuración de Imágenes</h4>
+                <p>Configura el bucket de Supabase Storage para subir imágenes:</p>
+            </div>
+            
+            <div class="form-section">
+                <h4>Configuración de Supabase Storage</h4>
+                <div class="form-group">
+                    <label>Nombre del Bucket</label>
+                    <input type="text" id="bucketName" value="productos-imagenes" placeholder="productos-imagenes">
+                </div>
+                <button class="btn" onclick="testStorageConnection()">Probar Conexión</button>
+                <div id="connectionStatus" class="message" style="display: none;"></div>
+            </div>
+            
+            <div class="supported-formats">
+                <h5>📸 Formatos de Imagen Soportados</h5>
+                <p>El sistema ahora acepta todos los tipos de imagen comunes:</p>
+                <div class="format-grid">
+                    <div class="format-item">JPG/JPEG</div>
+                    <div class="format-item">PNG</div>
+                    <div class="format-item">GIF</div>
+                    <div class="format-item">WEBP</div>
+                    <div class="format-item">SVG</div>
+                    <div class="format-item">BMP</div>
+                    <div class="format-item">TIFF</div>
+                    <div class="format-item">ICO</div>
+                    <div class="format-item">AVIF</div>
+                </div>
+            </div>
+            
+            <div class="storage-info">
+                <h4>Pasos para configurar Supabase Storage:</h4>
+                <ul>
+                    <li>Ve a tu proyecto en Supabase Dashboard</li>
+                    <li>Navega a Storage y crea un bucket llamado "productos-imagenes"</li>
+                    <li>Configura las políticas de acceso público para el bucket</li>
+                    <li>Haz clic en "Probar Conexión" para verificar</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Categorías -->
+        <div id="categorias" class="tab-content">
+            <div class="form-section">
+                <h3>Nueva Categoría</h3>
+                <form id="categoriaForm">
+                    <input type="hidden" id="categoriaId">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="categoriaNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="categoriaDescripcion" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Guardar</button>
+                    <button type="button" class="btn btn-danger" onclick="limpiarFormularioCategoria()">Limpiar</button>
+                </form>
+            </div>
+            
+            <div id="categoriasList" class="items-list">
+                <div class="loading">Cargando categorías...</div>
+            </div>
+        </div>
+        
+        <!-- Productos -->
+        <div id="productos" class="tab-content">
+            <div class="form-section">
+                <h3>Nuevo Producto</h3>
+                <form id="productoForm">
+                    <input type="hidden" id="productoId">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="productoNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select id="productoCategoria" required>
+                            <option value="">Seleccionar categoría</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="productoDescripcion" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio ($)</label>
+                        <input type="number" id="productoPrecio" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Imagen del Producto</label>
+                        <input type="file" id="productoImagenFile" accept="image/*" onchange="handleFileUpload(this)">
+                        <div class="file-info" id="fileInfo" style="display: none;"></div>
+                        <div class="upload-progress" id="uploadProgress">
+                            <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                        </div>
+                        <img id="imagePreview" class="image-preview" style="display: none;">
+                        <input type="hidden" id="productoImagen">
+                    </div>
+                    
+                    <button type="submit" class="btn" id="submitBtn">Guardar</button>
+                    <button type="button" class="btn btn-danger" onclick="limpiarFormularioProducto()">Limpiar</button>
+                </form>
+            </div>
+            
+            <div id="productosList" class="items-list">
+                <div class="loading">Cargando productos...</div>
+            </div>
+        </div>
+
+
+
+        <div class="tab-content" id="qr">
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./public/js/main.js"></script>
+  
+</body>
+</html>

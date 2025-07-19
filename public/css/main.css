@@ -1,0 +1,425 @@
+  /* Importar fuentes limpias */
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap');
+
+        /* Variables CSS para colores madera y naturales */
+        :root {
+            --wood-light: #f5f1e8;
+            --wood-medium: #e8dcc6;
+            --wood-dark: #d4c4a0;
+            --wood-accent: #8b7355;
+            --wood-deep: #5d4e37;
+            --wood-darkest: #3e2723;
+            
+            --text-primary: #2c2c2c;
+            --text-secondary: #555;
+            --text-muted: #777;
+            --text-light: #999;
+            
+            --border-light: #e0d5c0;
+            --border-medium: #c8b99c;
+            --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.15);
+            
+            --radius: 4px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--wood-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Container principal estilo Wikipedia */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: var(--shadow-medium);
+            min-height: 100vh;
+        }
+
+        /* Header simple y limpio */
+        .header {
+            border-bottom: 3px solid var(--wood-accent);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--wood-darkest);
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        /* Tabs estilo Wikipedia */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: var(--wood-accent);
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .tab-btn:hover {
+            background: var(--wood-light);
+            color: var(--wood-deep);
+        }
+
+        .tab-btn.active {
+            color: var(--wood-darkest);
+            border-bottom-color: var(--wood-accent);
+            background: var(--wood-light);
+        }
+
+        /* Contenido de tabs */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Secciones estilo Wikipedia */
+        .form-section {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-section h3 {
+            font-family: 'Crimson Text', serif;
+            color: var(--wood-darkest);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .form-section h4 {
+            color: var(--wood-deep);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        /* Formularios limpios */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius);
+            background: white;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--wood-accent);
+            box-shadow: 0 0 0 2px rgba(139, 115, 85, 0.2);
+        }
+
+        /* Botones estilo Wikipedia */
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid var(--wood-accent);
+            border-radius: var(--radius);
+            background: white;
+            color: var(--wood-accent);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+
+        .btn:hover {
+            background: var(--wood-accent);
+            color: white;
+        }
+
+        .btn-danger {
+            border-color: #c62d42;
+            color: #c62d42;
+        }
+
+        .btn-danger:hover {
+            background: #c62d42;
+            color: white;
+        }
+
+        /* Lista de items estilo tabla Wikipedia */
+        .items-list {
+            display: block;
+        }
+
+        .item {
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            background: white;
+            padding: 15px;
+            transition: var(--transition);
+        }
+
+        .item:hover {
+            box-shadow: var(--shadow-soft);
+            border-color: var(--border-medium);
+        }
+
+        .item-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--wood-darkest);
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .item-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--wood-accent);
+            font-size: 18px;
+        }
+
+        .item-actions {
+            text-align: right;
+        }
+
+        /* Imagen de productos */
+        .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-right: 12px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Preview de imagen */
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: var(--radius);
+            margin-top: 10px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Información de archivo */
+        .file-info {
+            background: var(--wood-light);
+            padding: 12px;
+            border-radius: var(--radius);
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Mensajes */
+        .message {
+            padding: 12px;
+            border-radius: var(--radius);
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #f0f9f0;
+            color: #2d5a2d;
+            border: 1px solid #c8e6c8;
+        }
+
+        .message.error {
+            background: #fdf2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .message.warning {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fed7aa;
+        }
+
+        /* Loading simple */
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Progreso de subida */
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: var(--wood-accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Grid de formatos */
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .format-item {
+            padding: 8px;
+            background: var(--wood-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Información de storage */
+        .storage-info {
+            background: var(--wood-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .storage-info h4,
+        .storage-info h5 {
+            color: var(--wood-darkest);
+            margin-bottom: 10px;
+        }
+
+        .storage-info p,
+        .storage-info li {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .storage-info ul {
+            padding-left: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .item-info {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .item-actions {
+                text-align: left;
+                margin-top: 10px;
+            }
+            
+            .btn {
+                margin-bottom: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-section {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
