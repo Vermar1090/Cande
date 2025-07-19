@@ -371,6 +371,21 @@
                     <small style="color: #54595d; font-size: 0.8em;">Mantén el logo pequeño para que el QR sea escaneable</small>
                 </div>
 
+                <div class="form-group" id="logo-position-group" style="display: none;">
+                    <label for="logo-position">Posición del logo:</label>
+                    <select id="logo-position" style="width: 200px; padding: 8px; border: 1px solid #a2a9b1; border-radius: 2px;">
+                        <option value="center">Centro</option>
+                        <option value="top-left">Arriba izquierda</option>
+                        <option value="top-right">Arriba derecha</option>
+                        <option value="bottom-left">Abajo izquierda</option>
+                        <option value="bottom-right">Abajo derecha</option>
+                        <option value="none" selected>Sin logo redondeado</option>
+                    </select>
+                    <small style="color: #54595d; font-size: 0.8em; display: block; margin-top: 5px;">
+                        "Sin logo redondeado" coloca el logo sin fondo blanco circular
+                    </small>
+                </div>
+
                 <div style="margin-top: 20px;">
                     <button class="btn btn-primary" onclick="generateQR()">Generar Código QR</button>
                     <button class="btn" onclick="clearForm()">Limpiar Formulario</button>
@@ -476,6 +491,7 @@
                         currentLogo = e.target.result;
                         showLogoPreview(e.target.result);
                         document.getElementById('logo-size-group').style.display = 'block';
+                        document.getElementById('logo-position-group').style.display = 'block';
                         showMessage('Logo cargado. Recuerda usar un nivel de corrección de errores alto (Q o H).', 'success');
                     };
                     reader.readAsDataURL(file);
@@ -509,6 +525,7 @@
             document.getElementById('logo-input').value = '';
             document.getElementById('logo-preview-container').innerHTML = '';
             document.getElementById('logo-size-group').style.display = 'none';
+            document.getElementById('logo-position-group').style.display = 'none';
             showMessage('Logo eliminado', 'success');
         }
 
@@ -597,20 +614,54 @@
         function addLogoToQR(canvas, logoSrc) {
             const ctx = canvas.getContext('2d');
             const logoSize = parseInt(document.getElementById('logo-size').value);
+            const logoPosition = document.getElementById('logo-position').value;
             
             const logoImg = new Image();
             logoImg.onload = function() {
-                const logoX = (canvas.width - logoSize) / 2;
-                const logoY = (canvas.height - logoSize) / 2;
+                let logoX, logoY;
+                const margin = 20; // Margen desde los bordes
                 
-                // Crear fondo blanco para el logo
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(logoX - 5, logoY - 5, logoSize + 10, logoSize + 10);
+                // Calcular posición según la selección
+                switch(logoPosition) {
+                    case 'center':
+                        logoX = (canvas.width - logoSize) / 2;
+                        logoY = (canvas.height - logoSize) / 2;
+                        break;
+                    case 'top-left':
+                        logoX = margin;
+                        logoY = margin;
+                        break;
+                    case 'top-right':
+                        logoX = canvas.width - logoSize - margin;
+                        logoY = margin;
+                        break;
+                    case 'bottom-left':
+                        logoX = margin;
+                        logoY = canvas.height - logoSize - margin;
+                        break;
+                    case 'bottom-right':
+                        logoX = canvas.width - logoSize - margin;
+                        logoY = canvas.height - logoSize - margin;
+                        break;
+                    case 'none':
+                    default:
+                        // Sin fondo redondeado, posición centrada
+                        logoX = (canvas.width - logoSize) / 2;
+                        logoY = (canvas.height - logoSize) / 2;
+                        break;
+                }
                 
-                // Dibujar borde
-                ctx.strokeStyle = '#000000';
-                ctx.lineWidth = 1;
-                ctx.strokeRect(logoX - 5, logoY - 5, logoSize + 10, logoSize + 10);
+                // Solo agregar fondo redondeado si no es "none"
+                if (logoPosition !== 'none') {
+                    // Crear fondo blanco para el logo
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(logoX - 5, logoY - 5, logoSize + 10, logoSize + 10);
+                    
+                    // Dibujar borde
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(logoX - 5, logoY - 5, logoSize + 10, logoSize + 10);
+                }
                 
                 // Dibujar logo
                 ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize);
@@ -623,6 +674,9 @@
             };
             logoImg.onerror = function() {
                 showMessage('Error al cargar el logo', 'error');
+                const text = document.getElementById('url-input').value.trim();
+                const size = parseInt(document.getElementById('qr-size').value);
+                const errorLevel = document.getElementById('error-level').value;
                 finishQRGeneration(text, size, errorLevel);
             };
             logoImg.src = logoSrc;
