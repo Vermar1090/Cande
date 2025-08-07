@@ -1356,7 +1356,7 @@ function generarTwemoji(emoji, alt = '') {
             }
         }
 
-        // Cargar categorías en el select con contador
+              // Cargar categorías en el select con contador
        function cargarCategoriasBotones() {
             const contenedor = document.getElementById('categoria-buttons');
             if (!contenedor) return;
@@ -1388,10 +1388,13 @@ function generarTwemoji(emoji, alt = '') {
                     mostrarBotonLimpiar();
                     marcarBotonActivo(categoria.id);
 
-                    // 👇 Scroll suave al área de productos
-                    const seccionProductos = document.getElementById('contenedor-productos');
+                   const seccionProductos = document.getElementById('contenido-productos');
                     if (seccionProductos) {
-                        seccionProductos.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const posicion = seccionProductos.offsetTop - 100; 
+                        window.scrollTo({ 
+                            top: posicion, 
+                            behavior: 'smooth' 
+                        });
                     }
                 };
                 contenedor.appendChild(btn);
@@ -1860,3 +1863,4 @@ function generarTwemoji(emoji, alt = '') {
 </body>
 
 </html>
+
