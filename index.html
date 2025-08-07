@@ -53,16 +53,17 @@
             justify-content: center;
             align-items: center;
         }
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background-color: #fdfaf4;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0cda9' fill-opacity='0.3'%3E%3Ccircle cx='10' cy='10' r='5'/%3E%3Ccircle cx='30' cy='30' r='5'/%3E%3Ccircle cx='50' cy='50' r='5'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: auto;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-}
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: #fdfaf4;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0cda9' fill-opacity='0.3'%3E%3Ccircle cx='10' cy='10' r='5'/%3E%3Ccircle cx='30' cy='30' r='5'/%3E%3Ccircle cx='50' cy='50' r='5'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
 
 
 
@@ -722,43 +723,43 @@
 
 
 
-.categoria-buttons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px;
-}
+        .categoria-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
 
-.categoria-btn {
-    background: #fff;
-    border: 1.5px solid #c19653;
-    border-radius: 10px;
-    padding: 6px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #c19653;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-    min-height: 60px;
-}
+        .categoria-btn {
+            background: #fff;
+            border: 1.5px solid #c19653;
+            border-radius: 10px;
+            padding: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #c19653;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+            min-height: 60px;
+        }
 
-.categoria-btn:hover,
-.categoria-btn.active {
-    background: #c19653;
-    color: white;
-    transform: scale(1.05);
-}
+        .categoria-btn:hover,
+        .categoria-btn.active {
+            background: #c19653;
+            color: white;
+            transform: scale(1.05);
+        }
 
-.categoria-btn i,
-.categoria-btn span:first-child {
-    font-size: 1.2rem;
-    line-height: 1;
-}
+        .categoria-btn i,
+        .categoria-btn span:first-child {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
 
 
 
@@ -1064,13 +1065,12 @@
 
 
         .icono-categoria {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    display: block;
-    margin-bottom: 4px;
-}
-
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            display: block;
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 
@@ -1111,7 +1111,7 @@
                             oninput="filtrarProductos()">
                         <i class="bi bi-search search-icon"></i>
                     </div>
-                  
+
                     <div class="filter-actions">
                         <button class="btn btn-secondary" onclick="limpiarFiltros()" id="clear-producto-btn"
                             style="display:none">
@@ -1119,10 +1119,10 @@
                         </button>
                     </div>
                 </div>
-                  <div class="filter-dropdown">
-                        <div class="categoria-buttons-grid" id="categoria-buttons"></div>
+                <div class="filter-dropdown">
+                    <div class="categoria-buttons-grid" id="categoria-buttons"></div>
 
-                    </div>
+                </div>
             </div>
 
             <!-- Estadísticas de productos -->
@@ -1151,9 +1151,9 @@
                 </div>
             </div>
 
-            
-        <!-- Vista Menú/Carta -->
-        <div id="vista-menu" style="display:none; padding: 30px;"></div>
+
+            <!-- Vista Menú/Carta -->
+            <div id="vista-menu" style="display:none; padding: 30px;"></div>
         </div>
 
 
@@ -1243,58 +1243,58 @@
         setInterval(rotarFrases, 4000);
 
         // Emojis para categorías (sin mostrar en el select)
-const emojisCategorias = {
-    'helados': '🍦',
-    'helado': '🍦',
-    'gelato': '🍨',
-    'sorbete': '🧊',
-    'paleta': '🍭',
-    'sundae': '🍨',
-    'Malteada': '🥤',
-    'malteadas': '🥤',
-    'batido': '🥤',
-    'frappé': '🥤',
-    'bebida': '🍹',
-    'bebidas': '🥤',
-    'Cafe': '☕',
-     'cafe': '☕',
-    'galleta': '🍪',
-    'galletas': '🍪',
-    'waffle': '🧇',
-    'waffles': '🧇',
-    'torta': '🎂',
-    'postre': '🍰',
-    'postres': '🍰',
-    'dulce': '🍬',
-    'salsa': '🍯',
-    'topping': '🍒',
-    'jarabe': '🍯',
-    'cobertura': '🍫',
-    'default': '🍦'
-};
+        const emojisCategorias = {
+            'helados': '🍦',
+            'helado': '🍦',
+            'gelato': '🍨',
+            'sorbete': '🧊',
+            'paleta': '🍭',
+            'sundae': '🍨',
+            'Malteada': '🥤',
+            'malteadas': '🥤',
+            'batido': '🥤',
+            'frappé': '🥤',
+            'bebida': '🍹',
+            'bebidas': '🥤',
+            'Cafe': '☕',
+            'cafe': '☕',
+            'galleta': '🍪',
+            'galletas': '🍪',
+            'waffle': '🧇',
+            'waffles': '🧇',
+            'torta': '🎂',
+            'postre': '🍰',
+            'postres': '🍰',
+            'dulce': '🍬',
+            'salsa': '🍯',
+            'topping': '🍒',
+            'jarabe': '🍯',
+            'cobertura': '🍫',
+            'default': '🍦'
+        };
 
 
 
-   function obtenerEmojiCategoria(nombreCategoria) {
-    if (!nombreCategoria) return generarTwemoji('🍦', 'emoji');
-    
-    const nombre = nombreCategoria.toLowerCase();
-    
-    // Buscar coincidencias más flexibles
-    const emoji = Object.entries(emojisCategorias).find(([key]) => 
-        nombre.includes(key) || key.includes(nombre)
-    )?.[1] || emojisCategorias.default;
-    
-    return generarTwemoji(emoji, nombreCategoria);
-}
+        function obtenerEmojiCategoria(nombreCategoria) {
+            if (!nombreCategoria) return generarTwemoji('🍦', 'emoji');
 
-function generarTwemoji(emoji, alt = '') {
-    const codepoints = Array.from(emoji)
-        .map(char => char.codePointAt(0).toString(16))
-        .join('-');
+            const nombre = nombreCategoria.toLowerCase();
 
-    return `<img src="https://twemoji.maxcdn.com/v/latest/72x72/${codepoints}.png" class="icono-categoria" alt="${alt}" />`;
-}
+            // Buscar coincidencias más flexibles
+            const emoji = Object.entries(emojisCategorias).find(([key]) =>
+                nombre.includes(key) || key.includes(nombre)
+            )?.[1] || emojisCategorias.default;
+
+            return generarTwemoji(emoji, nombreCategoria);
+        }
+
+        function generarTwemoji(emoji, alt = '') {
+            const codepoints = Array.from(emoji)
+                .map(char => char.codePointAt(0).toString(16))
+                .join('-');
+
+            return `<img src="https://twemoji.maxcdn.com/v/latest/72x72/${codepoints}.png" class="icono-categoria" alt="${alt}" />`;
+        }
 
 
 
@@ -1356,8 +1356,8 @@ function generarTwemoji(emoji, alt = '') {
             }
         }
 
-              // Cargar categorías en el select con contador
-       function cargarCategoriasBotones() {
+        // Cargar categorías en el select con contador
+        function cargarCategoriasBotones() {
             const contenedor = document.getElementById('categoria-buttons');
             if (!contenedor) return;
 
@@ -1376,7 +1376,7 @@ function generarTwemoji(emoji, alt = '') {
             };
             contenedor.appendChild(btnTodas);
 
-           categorias.forEach(categoria => {
+            categorias.forEach(categoria => {
                 const emoji = obtenerEmojiCategoria(categoria.nombre);
                 const btn = document.createElement('div');
                 btn.className = 'categoria-btn';
@@ -1388,12 +1388,13 @@ function generarTwemoji(emoji, alt = '') {
                     mostrarBotonLimpiar();
                     marcarBotonActivo(categoria.id);
 
-                   const seccionProductos = document.getElementById('contenido-productos');
+                    // 👇 Scroll suave al área de productos
+                    const seccionProductos = document.getElementById('contenido-productos');
                     if (seccionProductos) {
-                        const posicion = seccionProductos.offsetTop - 100; 
-                        window.scrollTo({ 
-                            top: posicion, 
-                            behavior: 'smooth' 
+                        const posicion = seccionProductos.offsetTop - 100; // 100px más arriba del elemento
+                        window.scrollTo({
+                            top: posicion,
+                            behavior: 'smooth'
                         });
                     }
                 };
@@ -1842,7 +1843,7 @@ function generarTwemoji(emoji, alt = '') {
 
                 document.getElementById('tab-productos').classList.add('active');
                 document.getElementById('tab-menu').classList.remove('active');
-                 document.getElementById('filtros-productos').style.display = 'block';
+                document.getElementById('filtros-productos').style.display = 'block';
             });
 
             document.getElementById('tab-menu').addEventListener('click', (e) => {
@@ -1858,9 +1859,49 @@ function generarTwemoji(emoji, alt = '') {
 
             // Recargar datos cada 60 segundos
             // setInterval(cargarDatos, 60000);
+
+
+            let paginaCargada = true; // Ya estamos dentro del load
+
+            // Prevenir salida accidental
+            window.addEventListener('beforeunload', function (e) {
+                if (paginaCargada) {
+                    const mensaje = '¿Estás seguro de que quieres salir? Se perderán los filtros aplicados.';
+                    e.preventDefault();
+                    e.returnValue = mensaje;
+                    return mensaje;
+                }
+            });
+
+            // Prevenir navegación hacia atrás
+            let navegacionPrevenida = false;
+
+            window.addEventListener('popstate', function (e) {
+                if (paginaCargada && !navegacionPrevenida) {
+                    const confirmar = confirm('¿Estás seguro de que quieres salir de la página?');
+
+                    if (!confirmar) {
+                        history.pushState(null, null, location.href);
+                        navegacionPrevenida = true;
+                        setTimeout(() => { navegacionPrevenida = false; }, 100);
+                    } else {
+                        paginaCargada = false;
+                        history.back();
+                    }
+                }
+            });
+
+            // Crear estado inicial
+            history.pushState(null, null, location.href);
+
         });
+    </script>
+
+
+
+    <script>
+
     </script>
 </body>
 
 </html>
-
