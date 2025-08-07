@@ -97,8 +97,8 @@
         }
 
         .header-logo {
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             object-fit: contain;
             filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.5));
             transition: transform 0.3s ease;
@@ -721,6 +721,47 @@
 } */
 
 
+
+.categoria-buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.categoria-btn {
+    background: #fff;
+    border: 1.5px solid #c19653;
+    border-radius: 10px;
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #c19653;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    min-height: 60px;
+}
+
+.categoria-btn:hover,
+.categoria-btn.active {
+    background: #c19653;
+    color: white;
+    transform: scale(1.05);
+}
+
+.categoria-btn i,
+.categoria-btn span:first-child {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+
+
         /* Responsive optimizado para móvil */
         @media (max-width: 1024px) {
             .filters-content-productos {
@@ -1018,6 +1059,18 @@
                 height: 160px;
             }
         }
+
+
+
+
+        .icono-categoria {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 4px;
+}
+
     </style>
 </head>
 
@@ -1058,12 +1111,7 @@
                             oninput="filtrarProductos()">
                         <i class="bi bi-search search-icon"></i>
                     </div>
-                    <div class="filter-dropdown">
-                        <select id="filtro-categoria-producto" class="dropdown-select" onchange="filtrarProductos()">
-                            <option value="">Todas las categorías</option>
-                        </select>
-                        <i class="bi bi-chevron-down dropdown-icon"></i>
-                    </div>
+                  
                     <div class="filter-actions">
                         <button class="btn btn-secondary" onclick="limpiarFiltros()" id="clear-producto-btn"
                             style="display:none">
@@ -1071,6 +1119,10 @@
                         </button>
                     </div>
                 </div>
+                  <div class="filter-dropdown">
+                        <div class="categoria-buttons-grid" id="categoria-buttons"></div>
+
+                    </div>
             </div>
 
             <!-- Estadísticas de productos -->
@@ -1191,39 +1243,61 @@
         setInterval(rotarFrases, 4000);
 
         // Emojis para categorías (sin mostrar en el select)
-        const emojisCategorias = {
-            'helados': '🍦',
-            'helado': '🍦',
-            'gelato': '🍨',
-            'sorbete': '🧊',
-            'paleta': '🍭',
-            'paletas': '🍭',
-            'sundae': '🍨',
-            'milkshake': '🥤',
-            'batido': '🥤',
-            'frappé': '🥤',
-            'topping': '🍒',
-            'toppings': '🍒',
-            'salsa': '🍯',
-            'salsas': '🍯',
-            'jarabe': '🍯',
-            'jarabes': '🍯',
-            'cobertura': '🍫',
-            'coberturas': '🍫',
-            'default': '🍦'
-        };
+const emojisCategorias = {
+    'helados': '🍦',
+    'helado': '🍦',
+    'gelato': '🍨',
+    'sorbete': '🧊',
+    'paleta': '🍭',
+    'sundae': '🍨',
+    'Malteada': '🥤',
+    'malteadas': '🥤',
+    'batido': '🥤',
+    'frappé': '🥤',
+    'bebida': '🍹',
+    'bebidas': '🥤',
+    'Cafe': '☕',
+     'cafe': '☕',
+    'galleta': '🍪',
+    'galletas': '🍪',
+    'waffle': '🧇',
+    'waffles': '🧇',
+    'torta': '🎂',
+    'postre': '🍰',
+    'postres': '🍰',
+    'dulce': '🍬',
+    'salsa': '🍯',
+    'topping': '🍒',
+    'jarabe': '🍯',
+    'cobertura': '🍫',
+    'default': '🍦'
+};
 
-        function obtenerEmojiCategoria(nombreCategoria) {
-            if (!nombreCategoria) return emojisCategorias.default;
 
-            const nombre = nombreCategoria.toLowerCase();
-            for (const [key, emoji] of Object.entries(emojisCategorias)) {
-                if (nombre.includes(key)) {
-                    return emoji;
-                }
-            }
-            return emojisCategorias.default;
-        }
+
+   function obtenerEmojiCategoria(nombreCategoria) {
+    if (!nombreCategoria) return generarTwemoji('🍦', 'emoji');
+    
+    const nombre = nombreCategoria.toLowerCase();
+    
+    // Buscar coincidencias más flexibles
+    const emoji = Object.entries(emojisCategorias).find(([key]) => 
+        nombre.includes(key) || key.includes(nombre)
+    )?.[1] || emojisCategorias.default;
+    
+    return generarTwemoji(emoji, nombreCategoria);
+}
+
+function generarTwemoji(emoji, alt = '') {
+    const codepoints = Array.from(emoji)
+        .map(char => char.codePointAt(0).toString(16))
+        .join('-');
+
+    return `<img src="https://twemoji.maxcdn.com/v/latest/72x72/${codepoints}.png" class="icono-categoria" alt="${alt}" />`;
+}
+
+
+
 
         // Contar productos por categoría
         function contarProductosPorCategoria(categoriaId) {
@@ -1269,7 +1343,8 @@
                 categorias = categoriasData || [];
 
                 // Cargar categorías en el select de filtros
-                cargarCategoriasSelect();
+                cargarCategoriasBotones();
+
 
                 // Mostrar productos
                 mostrarProductos();
@@ -1282,30 +1357,49 @@
         }
 
         // Cargar categorías en el select con contador
-        function cargarCategoriasSelect() {
-            const select = document.getElementById('filtro-categoria-producto');
-            if (!select) return;
+       function cargarCategoriasBotones() {
+    const contenedor = document.getElementById('categoria-buttons');
+    if (!contenedor) return;
 
-            const defaultOption = select.querySelector('option[value=""]');
-            select.innerHTML = '';
-            if (defaultOption) select.appendChild(defaultOption);
+    contenedor.innerHTML = '';
 
-            // Ordenar categorías por cantidad de productos (descendente)
-            const categoriasOrdenadas = [...categorias].sort((a, b) => {
-                const countA = contarProductosPorCategoria(a.id);
-                const countB = contarProductosPorCategoria(b.id);
-                return countB - countA;
-            });
+    // Botón de "Todas"
+    const btnTodas = document.createElement('div');
+    btnTodas.className = 'categoria-btn';
+    btnTodas.innerHTML = `<i class="bi bi-grid"></i><span>Todo</span>`;
+    btnTodas.onclick = () => {
+        filtros.categoria = '';
+        mostrarProductos();
+        actualizarFiltrosActivos();
+        mostrarBotonLimpiar();
+        marcarBotonActivo('');
+    };
+    contenedor.appendChild(btnTodas);
 
-            // Agregar opciones ordenadas
-            categoriasOrdenadas.forEach(categoria => {
-                const contador = contarProductosPorCategoria(categoria.id);
-                const option = document.createElement('option');
-                option.value = categoria.id;
-                option.textContent = `${categoria.nombre} (${contador})`;
-                select.appendChild(option);
-            });
-        }
+    categorias.forEach(categoria => {
+        const emoji = obtenerEmojiCategoria(categoria.nombre);
+        const btn = document.createElement('div');
+        btn.className = 'categoria-btn';
+        btn.innerHTML = `<span>${emoji}</span><span>${categoria.nombre}</span>`;
+        btn.onclick = () => {
+            filtros.categoria = categoria.id;
+            mostrarProductos();
+            actualizarFiltrosActivos();
+            mostrarBotonLimpiar();
+            marcarBotonActivo(categoria.id);
+        };
+        contenedor.appendChild(btn);
+    });
+}
+
+// Resaltar botón activo
+function marcarBotonActivo(categoriaId) {
+    const botones = document.querySelectorAll('.categoria-btn');
+    botones.forEach(btn => btn.classList.remove('active'));
+    const index = categoriaId === '' ? 0 : categorias.findIndex(c => c.id == categoriaId) + 1;
+    if (botones[index]) botones[index].classList.add('active');
+}
+
 
 
         // Mostrar estado de carga
@@ -1398,7 +1492,7 @@
                             <div class="producto-card-placeholder" style="display:none">🍦</div>` :
                             `<div class="producto-card-placeholder">🍦</div>`
                         }
-                        <div class="producto-badge">${emoji}</div>
+                      
                     </div>
 
                     <div class="producto-card-body">
