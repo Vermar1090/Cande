@@ -1887,13 +1887,15 @@
                     } else {
                         paginaCargada = false;
                         history.back();
+                         location.reload(); 
                     }
                 }
             });
 
             // Crear estado inicial
             history.pushState(null, null, location.href);
-
+             paginaCargada = true; // Marcamos que la página ya se ha cargado
+            navegacionPrevenida = false; // Reiniciar navegación prevenida
         });
     </script>
 
@@ -1905,3 +1907,4 @@
 </body>
 
 </html>
+
