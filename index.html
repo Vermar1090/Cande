@@ -906,7 +906,7 @@
             }
 
             .productos-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 15px;
                 width: 100%;
             }
@@ -1887,24 +1887,21 @@
                     } else {
                         paginaCargada = false;
                         history.back();
-                         location.reload(); 
+                        location.reload(); // Recargar la página al salir
                     }
                 }
             });
 
             // Crear estado inicial
             history.pushState(null, null, location.href);
-             paginaCargada = true; // Marcamos que la página ya se ha cargado
+            paginaCargada = true; // Marcamos que la página ya se ha cargado
             navegacionPrevenida = false; // Reiniciar navegación prevenida
+
         });
     </script>
 
 
 
-    <script>
-
-    </script>
 </body>
 
 </html>
-
