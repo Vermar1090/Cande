@@ -15,7 +15,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Great Vibes', cursive;
-            
+
         }
 
         html,
@@ -932,7 +932,7 @@
         .modal-descripcion-texto {
             line-height: 1.6;
             color: #000000;
-            font-size:1.5rem;
+            font-size: 1.5rem;
         }
 
         /* Sección de acciones */
@@ -1506,6 +1506,207 @@
             object-fit: contain;
             display: block;
             margin-bottom: 4px;
+        }
+
+
+
+
+        /* Estilos para el header del menú con botones de acción */
+        .menu-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .menu-title-section {
+            flex: 1;
+        }
+
+        .menu-actions {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .menu-action-btn {
+            white-space: nowrap;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .menu-action-btn .btn-text {
+            margin-left: 5px;
+        }
+
+        /* Estilos para las opciones de compartir */
+        .compartir-opciones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .compartir-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .compartir-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .compartir-btn.whatsapp {
+            background: linear-gradient(135deg, #25D366, #1ebe57);
+        }
+
+        .compartir-btn.facebook {
+            background: linear-gradient(135deg, #1877F2, #166fe5);
+        }
+
+        .compartir-btn.twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+        }
+
+        .compartir-btn.email {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+        }
+
+        /* Notificaciones */
+        .notificacion {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .notificacion.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notificacion.success {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+        }
+
+        .notificacion.error {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .notificacion.warning {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #333;
+        }
+
+        .notificacion.info {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 768px) {
+            .menu-header-actions {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .menu-title-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .menu-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .menu-action-btn {
+                flex: 1;
+                min-width: auto;
+            }
+
+            .compartir-opciones {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .notificacion {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                transform: translateY(-100px);
+            }
+
+            .notificacion.show {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-header-actions {
+                padding: 12px;
+            }
+
+            .menu-title-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .menu-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .menu-action-btn {
+                width: 100%;
+            }
+
+            .menu-action-btn .btn-text {
+                display: inline;
+            }
+        }
+
+        /* Mejoras para el contenido del menú */
+        .menu-carta {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 2px solid #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .menu-carta {
+                padding: 15px;
+                border-radius: 10px;
+            }
         }
     </style>
 </head>
@@ -2283,19 +2484,18 @@
 
 
 
-
         function mostrarMenuCarta() {
             const vistaMenu = document.getElementById('vista-menu');
             if (!vistaMenu) return;
 
             if (productos.length === 0) {
                 vistaMenu.innerHTML = `
-                <div class="no-results">
-                    <i class="bi bi-journal-x"></i>
-                    <h3>Menú vacío</h3>
-                    <p>No hay productos cargados en este momento.</p>
-                </div>
-            `;
+            <div class="no-results">
+                <i class="bi bi-journal-x"></i>
+                <h3>Menú vacío</h3>
+                <p>No hay productos cargados en este momento.</p>
+            </div>
+        `;
                 return;
             }
 
@@ -2311,33 +2511,60 @@
             const categoriasOrdenadas = Object.entries(agrupados)
                 .sort(([, a], [, b]) => b.length - a.length);
 
-            let html = '<div class="menu-carta">';
+            // Header con botones de acción
+            let html = `
+        <div class="menu-header-actions">
+            <div class="menu-title-section">
+                <h1 style="color: #c19653; font-size: 2.2rem; margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="bi bi-journal-text"></i>
+                    Nuestro Menú
+                </h1>
+                <p style="color: #6c757d; margin: 5px 0 0 0; font-size: 1rem;">
+                    Descubre todos nuestros deliciosos productos
+                </p>
+            </div>
+            
+            <div class="menu-actions">
+                <button class="btn btn-primary menu-action-btn" onclick="descargarMenuPDF()" title="Descargar menú en PDF">
+                    <i class="bi bi-download"></i>
+                    <span class="btn-text">Descargar PDF</span>
+                </button>
+                
+                <button class="btn btn-outline menu-action-btn" onclick="mostrarOpcionesCompartir()" title="Compartir menú">
+                    <i class="bi bi-share"></i>
+                    <span class="btn-text">Compartir</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="menu-carta" id="menu-carta-contenido">
+    `;
 
             categoriasOrdenadas.forEach(([catId, productosDeCategoria]) => {
                 const categoria = categorias.find(c => c.id == catId) || { nombre: 'Sin categoría' };
                 const emoji = obtenerEmojiCategoria(categoria.nombre);
 
                 html += `
-                <div class="menu-categoria">
-                    <h2 style="color: #c19653; font-size: 1.8rem; border-bottom: 2px solid #f0e0c0; padding-bottom: 10px; margin-top: 30px;">
-                        ${emoji} ${categoria.nombre}
-                    </h2>
-                    <ul style="list-style: none; padding: 0;">
-            `;
+            <div class="menu-categoria">
+                <h2 style="color: #c19653; font-size: 1.8rem; border-bottom: 2px solid #f0e0c0; padding-bottom: 10px; margin-top: 30px;">
+                    ${emoji} ${categoria.nombre}
+                </h2>
+                <ul style="list-style: none; padding: 0;">
+        `;
 
                 productosDeCategoria.forEach(p => {
                     const precio = formatearPrecio(p.precio);
                     html += `
-                    <li style="padding: 12px 0; border-bottom: 1px dashed #ddd;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
-                                <strong style="font-size: 2.0rem; color: #333;">${p.nombre}</strong><br>
-                                <span style="font-size: 1.2rem; color: #777;">${p.descripcion || ''}</span>
-                            </div>
-                            <div style="font-weight: bold; color: #28a745; font-size: 1.1rem;">${precio}</div>
+                <li style="padding: 12px 0; border-bottom: 1px dashed #ddd;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <strong style="font-size: 2.0rem; color: #333;">${p.nombre}</strong><br>
+                            <span style="font-size: 1.2rem; color: #777;">${p.descripcion || ''}</span>
                         </div>
-                    </li>
-                `;
+                        <div style="font-weight: bold; color: #28a745; font-size: 1.1rem;">${precio}</div>
+                    </div>
+                </li>
+            `;
                 });
 
                 html += '</ul></div>';
@@ -2349,6 +2576,189 @@
             document.getElementById('filtros-productos').style.display = 'none';
         }
 
+        // Función para descargar el menú como PDF
+        function descargarMenuPDF() {
+            // Mostrar loading
+            const btnDescargar = document.querySelector('.menu-action-btn');
+            const textoOriginal = btnDescargar.innerHTML;
+            btnDescargar.innerHTML = '<i class="bi bi-hourglass-split"></i> <span class="btn-text">Generando...</span>';
+            btnDescargar.disabled = true;
+
+            // Simular generación (aquí conectarías con tu backend)
+            setTimeout(() => {
+                // Crear elemento de descarga temporal
+                const link = document.createElement('a');
+                link.href = './menu-heladeria.pdf'; // Ruta a tu PDF en el directorio del proyecto
+                link.download = 'menu-heladeria-artesanal.pdf';
+                link.target = '_blank';
+
+                // Verificar si el archivo existe antes de intentar descargarlo
+                fetch(link.href, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            // El archivo existe, proceder con la descarga
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+
+                            // Mostrar mensaje de éxito
+                            mostrarNotificacion('¡PDF descargado exitosamente!', 'success');
+                        } else {
+                            // El archivo no existe
+                            mostrarNotificacion('PDF no disponible en este momento. Intenta más tarde.', 'warning');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al verificar PDF:', error);
+                        mostrarNotificacion('Error al descargar el PDF. Revisa tu conexión.', 'error');
+                    })
+                    .finally(() => {
+                        // Restaurar botón
+                        btnDescargar.innerHTML = textoOriginal;
+                        btnDescargar.disabled = false;
+                    });
+            }, 1000);
+        }
+
+        // Función para mostrar opciones de compartir
+        function mostrarOpcionesCompartir() {
+            const url = window.location.href;
+            const titulo = 'Menú - Heladería Artesanal';
+            const descripcion = 'Descubre nuestros deliciosos helados artesanales y productos únicos';
+
+            // Crear modal de opciones de compartir
+            const compartirModal = document.createElement('div');
+            compartirModal.className = 'modal';
+            compartirModal.style.display = 'flex';
+
+            compartirModal.innerHTML = `
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <i class="bi bi-share"></i> Compartir Menú
+                <button class="modal-close" onclick="cerrarModalCompartir()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 20px;">
+                    <p style="color: #6c757d; margin-bottom: 15px;">
+                        Comparte nuestro menú con tus amigos y familiares:
+                    </p>
+                </div>
+                
+                <div class="compartir-opciones">
+                    <button class="compartir-btn whatsapp" onclick="compartirWhatsApp('${url}', '${titulo}')">
+                        <i class="bi bi-whatsapp"></i>
+                        WhatsApp
+                    </button>
+                    
+                    <button class="compartir-btn facebook" onclick="compartirFacebook('${url}')">
+                        <i class="bi bi-facebook"></i>
+                        Facebook
+                    </button>
+                    
+                    <button class="compartir-btn twitter" onclick="compartirTwitter('${url}', '${titulo}')">
+                        <i class="bi bi-twitter"></i>
+                        Twitter
+                    </button>
+                    
+                    <button class="compartir-btn email" onclick="compartirEmail('${url}', '${titulo}', '${descripcion}')">
+                        <i class="bi bi-envelope"></i>
+                        Email
+                    </button>
+                </div>
+                
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #f8f9fa;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #6c757d;">
+                        O copia el enlace:
+                    </label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="url-para-copiar" value="${url}" readonly 
+                               style="flex: 1; padding: 10px; border: 2px solid #e9ecef; border-radius: 8px; background: #f8f9fa;">
+                        <button class="btn btn-primary" onclick="copiarURL()">
+                            <i class="bi bi-clipboard"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+            document.body.appendChild(compartirModal);
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Funciones de compartir en redes sociales
+        function compartirWhatsApp(url, titulo) {
+            const mensaje = encodeURIComponent(`${titulo} - ${url}`);
+            window.open(`https://wa.me/?text=${mensaje}`, '_blank');
+        }
+
+        function compartirFacebook(url) {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function compartirTwitter(url, titulo) {
+            const texto = encodeURIComponent(titulo);
+            window.open(`https://twitter.com/intent/tweet?text=${texto}&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function compartirEmail(url, titulo, descripcion) {
+            const asunto = encodeURIComponent(titulo);
+            const cuerpo = encodeURIComponent(`${descripcion}\n\nVisita nuestro menú: ${url}`);
+            window.location.href = `mailto:?subject=${asunto}&body=${cuerpo}`;
+        }
+
+        // Función para copiar URL al portapapeles
+        function copiarURL() {
+            const input = document.getElementById('url-para-copiar');
+            input.select();
+            input.setSelectionRange(0, 99999); // Para móviles
+
+            try {
+                document.execCommand('copy');
+                mostrarNotificacion('¡Enlace copiado al portapapeles!', 'success');
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                mostrarNotificacion('No se pudo copiar el enlace', 'error');
+            }
+        }
+
+        // Función para cerrar modal de compartir
+        function cerrarModalCompartir() {
+            const modal = document.querySelector('.modal:last-child');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Función para mostrar notificaciones
+        function mostrarNotificacion(mensaje, tipo = 'info') {
+            const notificacion = document.createElement('div');
+            notificacion.className = `notificacion ${tipo}`;
+
+            const iconos = {
+                'success': 'bi-check-circle',
+                'error': 'bi-x-circle',
+                'warning': 'bi-exclamation-triangle',
+                'info': 'bi-info-circle'
+            };
+
+            notificacion.innerHTML = `
+        <i class="bi ${iconos[tipo]}"></i>
+        ${mensaje}
+    `;
+
+            document.body.appendChild(notificacion);
+
+            // Animar entrada
+            setTimeout(() => notificacion.classList.add('show'), 100);
+
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                notificacion.classList.remove('show');
+                setTimeout(() => notificacion.remove(), 300);
+            }, 3000);
+        }
 
 
 
