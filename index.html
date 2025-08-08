@@ -604,407 +604,538 @@
         }
 
         /* Modal mejorado con mejor organización del contenido */
-     /* Modal mejorado con mejor organización del contenido */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-    backdrop-filter: blur(5px);
-}
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
 
-.modal-content {
-    background: white;
-    border-radius: 20px;
-    max-width: 700px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideIn 0.3s ease-out;
-}
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
 
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-50px);
+            }
 
-.modal-header {
-    background: linear-gradient(135deg, #c19653, #a67c00);
-    color: white;
-    padding: 20px 25px;
-    border-radius: 20px 20px 0 0;
-    font-weight: 600;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
 
-.modal-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 5px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .modal-header {
+            background: linear-gradient(135deg, #c19653, #a67c00);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 20px 20px 0 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.modal-close:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
-}
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.modal-body {
-    padding: 0;
-}
+        .modal-close:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
 
-/* Contenedor principal del producto en el modal */
-.modal-producto-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
+        .modal-body {
+            padding: 0;
+        }
 
-/* Sección de imagen - SÚPER GRANDE Y PROTAGONISTA */
-.modal-imagen-section {
-    width: 100%;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-}
+        /* Contenedor principal del producto en el modal */
+        .modal-producto-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
 
-.modal-image {
-    width: 100%;
-    max-width: 100%;
-    height: 400px; /* MÁS GRANDE */
-    object-fit: contain;
-    border-radius: 15px;
-    border: 3px solid #ffffff;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-    background: white;
-    padding: 8px;
-}
+        /* Sección de imagen - SÚPER GRANDE Y PROTAGONISTA + CLICKEABLE */
+        .modal-imagen-section {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            position: relative;
+        }
 
-.modal-placeholder {
-    width: 100%;
-    max-width: 100%;
-    height: 400px; /* MÁS GRANDE */
-    background: linear-gradient(135deg, #d4a574, #c19653);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8rem; /* EMOJI GIGANTE */
-    color: white;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    border: 3px solid #ffffff;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
+        .modal-image {
+            width: 100%;
+            max-width: 100%;
+            height: 400px;
+            /* MÁS GRANDE */
+            object-fit: contain;
+            border-radius: 15px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            background: white;
+            padding: 8px;
+            cursor: pointer;
+            /* Indica que es clickeable */
+            transition: all 0.3s ease;
+        }
 
-/* Sección de información del producto */
-.modal-info-section {
-    padding: 25px;
-}
+        .modal-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
 
-.modal-producto-titulo {
-    color: #2c3e50;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
-    line-height: 1.3;
-}
+        .modal-placeholder {
+            width: 100%;
+            max-width: 100%;
+            height: 400px;
+            /* MÁS GRANDE */
+            background: linear-gradient(135deg, #d4a574, #c19653);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            /* EMOJI GIGANTE */
+            color: white;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
 
-.modal-info-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
-}
+        /* Indicador de que la imagen es clickeable */
+        .imagen-clickeable-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
 
-.modal-info-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
-    background: #f8f9fa;
-    border-radius: 10px;
-    border-left: 4px solid #c19653;
-}
+        .modal-imagen-section:hover .imagen-clickeable-overlay {
+            opacity: 1;
+        }
 
-.modal-info-label {
-    font-weight: 600;
-    color: #6c757d;
-    min-width: 80px;
-}
+        /* NUEVO: Modal de imagen en pantalla completa */
+        .fullscreen-image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            cursor: zoom-out;
+        }
 
-.modal-info-value {
-    flex: 1;
-}
+        .fullscreen-image-container {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.modal-precio {
-    color: #28a745;
-    font-weight: 700;
-    font-size: 1.5rem;
-}
+        .fullscreen-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+        }
 
-.modal-categoria-badge {
-    background: linear-gradient(135deg, #e9ecef, #f8f9fa);
-    padding: 6px 15px;
-    border-radius: 20px;
-    color: #6c757d;
-    border: 2px solid #e9ecef;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
+        .fullscreen-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.modal-descripcion {
-    background: #fff;
-    border: 2px solid #f8f9fa;
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 15px;
-}
+        .fullscreen-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
 
-.modal-descripcion-titulo {
-    color: #6c757d;
-    font-weight: 600;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .fullscreen-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
 
-.modal-descripcion-texto {
-    line-height: 1.6;
-    color: #495057;
-    font-size: 1rem;
-}
+        /* Animación de entrada para pantalla completa */
+        @keyframes fullscreenZoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.3);
+            }
 
-/* Sección de acciones */
-.modal-actions {
-    padding: 20px 25px;
-    border-top: 2px solid #f8f9fa;
-    text-align: center;
-    background: #fafbfc;
-    border-radius: 0 0 20px 20px;
-}
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-/* Responsive para móviles - IMÁGENES GIGANTES */
-@media (max-width: 768px) {
-    .modal {
-        padding: 5px;
-    }
-    
-    .modal-content {
-        max-width: calc(100vw - 10px);
-        max-height: calc(100vh - 10px);
-        border-radius: 15px;
-    }
-    
-    .modal-header {
-        padding: 10px 12px;
-        font-size: 1rem;
-        border-radius: 15px 15px 0 0;
-    }
-    
-    .modal-close {
-        top: 8px;
-        right: 10px;
-        font-size: 1.4rem;
-    }
-    
-    .modal-imagen-section {
-        padding: 12px;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    }
-    
-    .modal-image,
-    .modal-placeholder {
-        max-width: 100%;
-        height: 350px; /* IMAGEN GIGANTE EN MÓVIL */
-        width: 100%;
-    }
-    
-    .modal-placeholder {
-        font-size: 7rem; /* EMOJI GIGANTE */
-    }
-    
-    .modal-info-section {
-        padding: 12px;
-    }
-    
-    .modal-producto-titulo {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    
-    .modal-info-item {
-        padding: 6px 8px;
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.9rem;
-    }
-    
-    .modal-info-label {
-        min-width: 60px;
-        font-size: 0.85rem;
-    }
-    
-    .modal-precio {
-        font-size: 1.1rem;
-    }
-    
-    .modal-actions {
-        padding: 10px 12px;
-    }
-    
-    .modal-descripcion {
-        padding: 10px;
-        margin-top: 8px;
-        font-size: 0.9rem;
-    }
-}
+        .fullscreen-image-container {
+            animation: fullscreenZoomIn 0.3s ease-out;
+        }
 
-@media (max-width: 480px) {
-    .modal-content {
-        max-width: calc(100vw - 5px);
-        border-radius: 12px;
-        max-height: calc(100vh - 5px);
-    }
-    
-    .modal-header {
-        padding: 8px 10px;
-        font-size: 0.95rem;
-        border-radius: 12px 12px 0 0;
-    }
-    
-    .modal-close {
-        top: 6px;
-        right: 8px;
-        font-size: 1.3rem;
-    }
-    
-    .modal-imagen-section {
-        padding: 10px;
-    }
-    
-    .modal-image,
-    .modal-placeholder {
-        height: 320px; /* IMAGEN ENORME incluso en pantallas pequeñas */
-        width: 100%;
-    }
-    
-    .modal-placeholder {
-        font-size: 6.5rem; /* EMOJI ENORME */
-    }
-    
-    .modal-info-section {
-        padding: 10px;
-    }
-    
-    .modal-producto-titulo {
-        font-size: 1.2rem;
-        margin-bottom: 8px;
-        line-height: 1.2;
-    }
-    
-    .modal-info-item {
-        padding: 5px 6px;
-        gap: 6px;
-        font-size: 0.85rem;
-    }
-    
-    .modal-info-label {
-        min-width: 55px;
-        font-size: 0.8rem;
-    }
-    
-    .modal-precio {
-        font-size: 1rem;
-    }
-    
-    .modal-descripcion {
-        padding: 8px;
-        font-size: 0.85rem;
-    }
-    
-    .modal-actions {
-        padding: 8px 10px;
-    }
-    
-    .btn {
-        padding: 6px 12px;
-        font-size: 0.85rem;
-    }
-}
+        /* Sección de información del producto */
+        .modal-info-section {
+            padding: 25px;
+        }
 
-/* Pantallas muy pequeñas - IMAGEN SIGUE SIENDO GIGANTE */
-@media (max-width: 360px) {
-    .modal-imagen-section {
-        padding: 8px;
-    }
-    
-    .modal-image,
-    .modal-placeholder {
-        height: 280px; /* IMAGEN GIGANTE incluso aquí */
-    }
-    
-    .modal-placeholder {
-        font-size: 5.5rem; /* EMOJI GIGANTE */
-    }
-    
-    .modal-info-section {
-        padding: 8px;
-    }
-    
-    .modal-producto-titulo {
-        font-size: 1.1rem;
-        line-height: 1.1;
-        margin-bottom: 6px;
-    }
-    
-    .modal-info-item {
-        padding: 4px;
-        font-size: 0.8rem;
-    }
-    
-    .modal-descripcion {
-        padding: 6px;
-        font-size: 0.8rem;
-    }
-}
+        .modal-producto-titulo {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .modal-info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #c19653;
+        }
+
+        .modal-info-label {
+            font-weight: 600;
+            color: #6c757d;
+            min-width: 80px;
+        }
+
+        .modal-info-value {
+            flex: 1;
+        }
+
+        .modal-precio {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .modal-categoria-badge {
+            background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+            padding: 6px 15px;
+            border-radius: 20px;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-descripcion {
+            background: #fff;
+            border: 2px solid #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .modal-descripcion-titulo {
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-descripcion-texto {
+            line-height: 1.6;
+            color: #495057;
+            font-size: 1rem;
+        }
+
+        /* Sección de acciones */
+        .modal-actions {
+            padding: 20px 25px;
+            border-top: 2px solid #f8f9fa;
+            text-align: center;
+            background: #fafbfc;
+            border-radius: 0 0 20px 20px;
+        }
+
+        /* Responsive para móviles - IMÁGENES GIGANTES */
+        @media (max-width: 768px) {
+            .modal {
+                padding: 5px;
+            }
+
+            .modal-content {
+                max-width: calc(100vw - 10px);
+                max-height: calc(100vh - 10px);
+                border-radius: 15px;
+            }
+
+            .modal-header {
+                padding: 10px 12px;
+                font-size: 1rem;
+                border-radius: 15px 15px 0 0;
+            }
+
+            .modal-close {
+                top: 8px;
+                right: 10px;
+                font-size: 1.4rem;
+            }
+
+            .modal-imagen-section {
+                padding: 12px;
+                background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            }
+
+            .modal-image,
+            .modal-placeholder {
+                max-width: 100%;
+                height: 350px;
+                /* IMAGEN GIGANTE EN MÓVIL */
+                width: 100%;
+            }
+
+            .modal-placeholder {
+                font-size: 7rem;
+                /* EMOJI GIGANTE */
+            }
+
+            .modal-info-section {
+                padding: 12px;
+            }
+
+            .modal-producto-titulo {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .modal-info-item {
+                padding: 6px 8px;
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.9rem;
+            }
+
+            .modal-info-label {
+                min-width: 60px;
+                font-size: 0.85rem;
+            }
+
+            .modal-precio {
+                font-size: 1.1rem;
+            }
+
+            .modal-actions {
+                padding: 10px 12px;
+            }
+
+            .modal-descripcion {
+                padding: 10px;
+                margin-top: 8px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                max-width: calc(100vw - 5px);
+                border-radius: 12px;
+                max-height: calc(100vh - 5px);
+            }
+
+            .modal-header {
+                padding: 8px 10px;
+                font-size: 0.95rem;
+                border-radius: 12px 12px 0 0;
+            }
+
+            .modal-close {
+                top: 6px;
+                right: 8px;
+                font-size: 1.3rem;
+            }
+
+            .modal-imagen-section {
+                padding: 10px;
+            }
+
+            .modal-image,
+            .modal-placeholder {
+                height: 320px;
+                /* IMAGEN ENORME incluso en pantallas pequeñas */
+                width: 100%;
+            }
+
+            .modal-placeholder {
+                font-size: 6.5rem;
+                /* EMOJI ENORME */
+            }
+
+            .modal-info-section {
+                padding: 10px;
+            }
+
+            .modal-producto-titulo {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+                line-height: 1.2;
+            }
+
+            .modal-info-item {
+                padding: 5px 6px;
+                gap: 6px;
+                font-size: 0.85rem;
+            }
+
+            .modal-info-label {
+                min-width: 55px;
+                font-size: 0.8rem;
+            }
+
+            .modal-precio {
+                font-size: 1rem;
+            }
+
+            .modal-descripcion {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+
+            .modal-actions {
+                padding: 8px 10px;
+            }
+
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Pantallas muy pequeñas - IMAGEN SIGUE SIENDO GIGANTE */
+        @media (max-width: 360px) {
+            .modal-imagen-section {
+                padding: 8px;
+            }
+
+            .modal-image,
+            .modal-placeholder {
+                height: 280px;
+                /* IMAGEN GIGANTE incluso aquí */
+            }
+
+            .modal-placeholder {
+                font-size: 5.5rem;
+                /* EMOJI GIGANTE */
+            }
+
+            .modal-info-section {
+                padding: 8px;
+            }
+
+            .modal-producto-titulo {
+                font-size: 1.1rem;
+                line-height: 1.1;
+                margin-bottom: 6px;
+            }
+
+            .modal-info-item {
+                padding: 4px;
+                font-size: 0.8rem;
+            }
+
+            .modal-descripcion {
+                padding: 6px;
+                font-size: 0.8rem;
+            }
+        }
+
         /* Contador de productos por categoría */
         .categoria-badge {
             background: rgba(40, 167, 69, 0.1);
@@ -1951,6 +2082,7 @@
 
         // Modal
         // Función mejorada para mostrar detalles del producto en el modal
+        // Función mejorada para mostrar detalles del producto en el modal
         function mostrarDetalle(id) {
             const producto = productos.find(p => p.id === id);
             if (!producto) return;
@@ -1972,8 +2104,13 @@
                         class="modal-image"
                         loading="lazy"
                         decoding="async"
+                        onclick="abrirImagenPantallaCompleta('${producto.imagen}', '${producto.nombre}')"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     />
+                    <div class="imagen-clickeable-overlay">
+                        <i class="bi bi-arrows-fullscreen"></i>
+                        Clic para ampliar
+                    </div>
                     <div class="modal-placeholder" style="display:none;">🍦</div>` :
                     `<div class="modal-placeholder">🍦</div>`
                 }
@@ -2032,7 +2169,61 @@
             }
         }
 
-        // Función mejorada para cerrar el modal
+        // NUEVA función para abrir imagen en pantalla completa
+        function abrirImagenPantallaCompleta(imagenUrl, nombreProducto) {
+            // Crear el modal de pantalla completa
+            const fullscreenModal = document.createElement('div');
+            fullscreenModal.className = 'fullscreen-image-modal';
+            fullscreenModal.onclick = cerrarImagenPantallaCompleta;
+
+            fullscreenModal.innerHTML = `
+        <div class="fullscreen-image-container" onclick="event.stopPropagation()">
+            <img src="${imagenUrl}" alt="${nombreProducto}" class="fullscreen-image">
+            <button class="fullscreen-close" onclick="cerrarImagenPantallaCompleta()" title="Cerrar (ESC)">
+                <i class="bi bi-x"></i>
+            </button>
+            <div class="fullscreen-info">
+                <i class="bi bi-info-circle"></i>
+                ${nombreProducto} • Clic fuera de la imagen o presiona ESC para cerrar
+            </div>
+        </div>
+    `;
+
+            // Agregar al body
+            document.body.appendChild(fullscreenModal);
+
+            // Prevenir scroll del body
+            document.body.style.overflow = 'hidden';
+
+            // Event listener para cerrar con ESC
+            document.addEventListener('keydown', cerrarConEscape);
+        }
+
+        // Función para cerrar imagen de pantalla completa
+        function cerrarImagenPantallaCompleta() {
+            const fullscreenModal = document.querySelector('.fullscreen-image-modal');
+            if (fullscreenModal) {
+                fullscreenModal.remove();
+
+                // Restaurar scroll del body solo si no hay otros modales abiertos
+                const modalPrincipal = document.getElementById('modal');
+                if (!modalPrincipal || modalPrincipal.style.display === 'none') {
+                    document.body.style.overflow = '';
+                }
+
+                // Remover event listener de ESC
+                document.removeEventListener('keydown', cerrarConEscape);
+            }
+        }
+
+        // Función para cerrar con tecla ESC
+        function cerrarConEscape(event) {
+            if (event.key === 'Escape') {
+                cerrarImagenPantallaCompleta();
+            }
+        }
+
+        // Función mejorada para cerrar el modal principal
         function cerrarModal(event) {
             const modal = document.getElementById('modal');
             if (!modal) return;
@@ -2040,10 +2231,15 @@
             if (!event || event.target === modal || event.target.closest('.modal-close') || event.target.closest('.btn')) {
                 modal.style.display = 'none';
 
-                // Restaurar scroll del body
-                document.body.style.overflow = '';
+                // Restaurar scroll del body solo si no hay imagen en pantalla completa
+                const fullscreenModal = document.querySelector('.fullscreen-image-modal');
+                if (!fullscreenModal) {
+                    document.body.style.overflow = '';
+                }
             }
         }
+
+
 
 
         function mostrarError(mensaje) {
