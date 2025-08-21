@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heladería - Menú de Productos</title>
+    <title>Cande Helado y Cafe</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -1404,7 +1404,7 @@
             }
 
             .header .subtitle {
-                font-size: 2rem;
+                font-size: 1rem;
             }
 
             .content {
@@ -2349,7 +2349,7 @@
     <div class="container">
         <div class="header">
             <h1>
-                <img src="./cande-logo.png" alt="Logo Heladería" class="header-logo"
+                <img src="./cande-logo1.png" alt="Logo Heladería" class="header-logo"
                     onerror="this.style.display='none';">
                 <!-- <span class="header-title">Heladería Artesanal</span> -->
             </h1>
@@ -3039,23 +3039,48 @@
         // Modal
         // Función mejorada para mostrar detalles del producto en el modal
 
-        // Función actualizada para mostrar detalles con variantes
-        function mostrarDetalle(id) {
-            const producto = productos.find(p => p.id === id);
-            if (!producto) return;
+      // Función actualizada para mostrar detalles con variantes - CORREGIDA PARA BASE64
+function mostrarDetalle(id) {
+    const producto = productos.find(p => p.id === id);
+    if (!producto) return;
 
-            const categoria = producto.categoria || { nombre: 'Sin categoría' };
+    const categoria = producto.categoria || { nombre: 'Sin categoría' };
 
-            const modalBody = document.getElementById('modal-body');
-            if (!modalBody) return;
+    const modalBody = document.getElementById('modal-body');
+    if (!modalBody) return;
 
-            // Determinar imagen principal
-            let imagenPrincipal = producto.imagen;
-            if (!imagenPrincipal && producto.variantes && producto.variantes.length > 0) {
-                imagenPrincipal = producto.variantes[0].imagen;
+    // Función auxiliar para verificar y limpiar URLs base64
+    function procesarImagenUrl(url) {
+        if (!url) return null;
+        
+        // Si es una URL base64, devolverla tal como está
+        if (url.startsWith('data:image/')) {
+            return url;
+        }
+        
+        // Si es una URL normal, devolverla tal como está
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return url;
+        }
+        
+        // Si no es ninguno de los anteriores, considerar que puede ser una URL relativa
+        return url;
+    }
+
+    // Determinar imagen principal
+    let imagenPrincipal = procesarImagenUrl(producto.imagen);
+    if (!imagenPrincipal && producto.variantes && producto.variantes.length > 0) {
+        // Buscar la primera variante que tenga imagen
+        for (let variante of producto.variantes) {
+            const imagenVariante = procesarImagenUrl(variante.imagen);
+            if (imagenVariante) {
+                imagenPrincipal = imagenVariante;
+                break;
             }
+        }
+    }
 
-            let html = `
+    let html = `
         <div class="modal-producto-container">
             <!-- Sección de imagen -->
             <div class="modal-imagen-section">
@@ -3066,8 +3091,8 @@
                         class="modal-image"
                         loading="lazy"
                         decoding="async"
-                        onclick="abrirImagenPantallaCompleta('${imagenPrincipal}', '${producto.nombre}')"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        onclick="abrirImagenPantallaCompleta('${escapeHtml(imagenPrincipal)}', '${escapeHtml(producto.nombre)}')"
+                        onerror="this.style.display='none'; this.nextElementSibling.nextElementSibling.style.display='flex';"
                     />
                     <div class="imagen-clickeable-overlay">
                         <i class="bi bi-arrows-fullscreen"></i>
@@ -3105,9 +3130,9 @@
                 ` : ''}
     `;
 
-            // Mostrar variantes si existen
-            if (producto.variantes && producto.variantes.length > 0) {
-                html += `
+    // Mostrar variantes si existen
+    if (producto.variantes && producto.variantes.length > 0) {
+        html += `
             <div class="modal-variantes-section">
                 <div class="modal-descripcion-titulo" style="margin-bottom: 15px;">
                     <i class="bi bi-collection" style="color: #c19653;"></i>
@@ -3116,15 +3141,21 @@
                 <div class="variantes-grid">
         `;
 
-                producto.variantes.forEach((variante, index) => {
-                    const precioFormateado = formatearPrecio(variante.precio);
+        producto.variantes.forEach((variante, index) => {
+            const precioFormateado = formatearPrecio(variante.precio);
+            const imagenVariante = procesarImagenUrl(variante.imagen);
+            
+            // Solo mostrar imagen de variante si es diferente a la imagen principal
+            const mostrarImagenVariante = imagenVariante && imagenVariante !== imagenPrincipal;
 
-                    html += `
+            html += `
                 <div class="variante-card" onclick="seleccionarVariante(${producto.id}, ${variante.id})">
-                    ${variante.imagen && variante.imagen !== imagenPrincipal ? `
+                    ${mostrarImagenVariante ? `
                         <div class="variante-imagen">
-                            <img src="${variante.imagen}" alt="${variante.nombre_variante}" 
-                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                            <img src="${imagenVariante}" 
+                                 alt="${escapeHtml(variante.nombre_variante)}" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;"
+                                 onerror="this.style.display='none';">
                         </div>
                     ` : ''}
                     <div class="variante-info">
@@ -3136,15 +3167,15 @@
                     </div>
                 </div>
             `;
-                });
+        });
 
-                html += `
+        html += `
                 </div>
             </div>
         `;
-            }
+    }
 
-            html += `
+    html += `
             </div>
 
             <!-- Sección de acciones -->
@@ -3156,14 +3187,23 @@
         </div>
     `;
 
-            modalBody.innerHTML = html;
+    modalBody.innerHTML = html;
 
-            const modal = document.getElementById('modal');
-            if (modal) {
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        }
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Función auxiliar para escapar HTML y evitar problemas con comillas en base64
+function escapeHtml(text) {
+    if (!text) return '';
+    
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
 
         // Función para seleccionar una variante específica
         function seleccionarVariante(productoId, varianteId) {
@@ -3189,34 +3229,97 @@
             mostrarNotificacion(`Seleccionaste: ${variante.nombre_variante}`, 'info');
         }
         // NUEVA función para abrir imagen en pantalla completa
-        function abrirImagenPantallaCompleta(imagenUrl, nombreProducto) {
-            // Crear el modal de pantalla completa
-            const fullscreenModal = document.createElement('div');
-            fullscreenModal.className = 'fullscreen-image-modal';
-            fullscreenModal.onclick = cerrarImagenPantallaCompleta;
+       
+// Función mejorada para abrir imagen en pantalla completa
+function abrirImagenPantallaCompleta(imagenUrl, nombreProducto) {
+    // Crear modal de pantalla completa
+    const modalFullscreen = document.createElement('div');
+    modalFullscreen.id = 'modal-imagen-fullscreen';
+    modalFullscreen.className = 'modal-fullscreen';
+    modalFullscreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        backdrop-filter: blur(5px);
+    `;
 
-            fullscreenModal.innerHTML = `
-        <div class="fullscreen-image-container" onclick="event.stopPropagation()">
-            <img src="${imagenUrl}" alt="${nombreProducto}" class="fullscreen-image">
-            <button class="fullscreen-close" onclick="cerrarImagenPantallaCompleta()" title="Cerrar (ESC)">
-                <i class="bi bi-x"></i>
+    modalFullscreen.innerHTML = `
+        <div style="position: relative; max-width: 90vw; max-height: 90vh; text-align: center;">
+            <button onclick="cerrarImagenFullscreen()" 
+                    style="position: absolute; top: -50px; right: 0; 
+                           background: rgba(255,255,255,0.9); border: none; 
+                           border-radius: 50%; width: 40px; height: 40px; 
+                           font-size: 18px; cursor: pointer; color: #333;
+                           display: flex; align-items: center; justify-content: center;">
+                <i class="bi bi-x-lg"></i>
             </button>
-            <div class="fullscreen-info">
-                <i class="bi bi-info-circle"></i>
+            <img src="${imagenUrl}" 
+                 alt="${nombreProducto}"
+                 style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display: none; color: white; font-size: 48px; padding: 40px;">
+                🍦<br><small style="font-size: 16px;">Error al cargar la imagen</small>
+            </div>
+            <div style="color: white; margin-top: 15px; font-size: 18px; font-weight: 500;">
                 ${nombreProducto}
             </div>
         </div>
     `;
 
-            // Agregar al body
-            document.body.appendChild(fullscreenModal);
+    document.body.appendChild(modalFullscreen);
+    document.body.style.overflow = 'hidden';
 
-            // Prevenir scroll del body
-            document.body.style.overflow = 'hidden';
-
-            // Event listener para cerrar con ESC
-            document.addEventListener('keydown', cerrarConEscape);
+    // Cerrar con ESC
+    const cerrarConEsc = (e) => {
+        if (e.key === 'Escape') {
+            cerrarImagenFullscreen();
         }
+    };
+    document.addEventListener('keydown', cerrarConEsc);
+
+    // Cerrar al hacer clic fuera
+    modalFullscreen.addEventListener('click', (e) => {
+        if (e.target === modalFullscreen) {
+            cerrarImagenFullscreen();
+        }
+    });
+
+    // Almacenar función de limpieza
+    modalFullscreen._cleanup = () => {
+        document.removeEventListener('keydown', cerrarConEsc);
+    };
+}
+// Función para cerrar imagen en pantalla completa
+function cerrarImagenFullscreen() {
+    const modal = document.getElementById('modal-imagen-fullscreen');
+    if (modal) {
+        if (modal._cleanup) modal._cleanup();
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Función auxiliar mejorada para manejar errores de imagen
+function manejarErrorImagen(imgElement) {
+    imgElement.style.display = 'none';
+    
+    // Buscar el placeholder más cercano
+    let placeholder = imgElement.nextElementSibling;
+    while (placeholder && !placeholder.classList.contains('modal-placeholder') && !placeholder.classList.contains('producto-card-placeholder')) {
+        placeholder = placeholder.nextElementSibling;
+    }
+    
+    if (placeholder) {
+        placeholder.style.display = 'flex';
+    }
+}
 
         // Función para cerrar imagen de pantalla completa
         function cerrarImagenPantallaCompleta() {
