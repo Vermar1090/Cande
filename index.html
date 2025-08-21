@@ -1992,6 +1992,356 @@
                 transform: scale(1);
             }
         }
+
+
+
+
+
+
+
+        /* ============================================
+   ESTILOS PARA SISTEMA DE VARIANTES
+   ============================================ */
+
+        /* Badge de variantes en tarjetas de productos */
+        .producto-variantes-preview {
+            margin: 8px 0;
+            padding: 6px 0;
+            border-top: 1px solid #f1f3f4;
+        }
+
+        .producto-variantes-preview small {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .producto-variantes-preview i {
+            font-size: 0.8rem;
+            color: #c19653;
+        }
+
+        /* Sección de variantes en el modal */
+        .modal-variantes-section {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .modal-variantes-section .modal-descripcion-titulo {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Grid de variantes */
+        .variantes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        /* Tarjetas individuales de variantes */
+        .variante-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .variante-card:hover {
+            border-color: #c19653;
+            background: linear-gradient(135deg, #fff 0%, #fefdfb 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(193, 150, 83, 0.15);
+        }
+
+        .variante-card.selected {
+            border-color: #c19653;
+            background: linear-gradient(135deg, #c19653 0%, #a67c00 100%);
+            color: white;
+            box-shadow: 0 5px 20px rgba(193, 150, 83, 0.3);
+        }
+
+        .variante-card.selected::before {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Imagen de variante */
+        .variante-imagen {
+            flex-shrink: 0;
+        }
+
+        .variante-imagen img {
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .variante-card:hover .variante-imagen img {
+            border-color: #c19653;
+            transform: scale(1.05);
+        }
+
+        .variante-card.selected .variante-imagen img {
+            border-color: white;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Información de variante */
+        .variante-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .variante-nombre {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .variante-card.selected .variante-nombre {
+            color: white;
+        }
+
+        .variante-descripcion {
+            font-size: 0.85rem;
+            color: #6c757d;
+            line-height: 1.4;
+            margin: 2px 0;
+        }
+
+        .variante-card.selected .variante-descripcion {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .variante-precio {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+        .variante-card.selected .variante-precio {
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Badge de múltiples opciones en tarjeta de producto */
+        .producto-badge {
+            background: rgba(193, 150, 83, 0.95);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .producto-badge i {
+            font-size: 0.7rem;
+        }
+
+        /* Responsive para variantes */
+        @media (max-width: 768px) {
+            .modal-variantes-section {
+                padding: 15px;
+                margin-top: 10px;
+            }
+
+            .variante-card {
+                padding: 12px;
+                gap: 12px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .variante-imagen img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .variante-info {
+                align-items: center;
+            }
+
+            .variante-nombre {
+                font-size: 1rem;
+            }
+
+            .variante-descripcion {
+                font-size: 0.8rem;
+                text-align: center;
+            }
+
+            .variante-precio {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .variantes-grid {
+                gap: 8px;
+            }
+
+            .variante-card {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .variante-imagen img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .variante-nombre {
+                font-size: 0.95rem;
+            }
+
+            .variante-precio {
+                font-size: 1rem;
+            }
+
+            .producto-variantes-preview small {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Animaciones para las variantes */
+        @keyframes varianteSelected {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .variante-card.selected {
+            animation: varianteSelected 0.3s ease-out;
+        }
+
+        /* Efecto de loading para variantes */
+        .variantes-loading {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .variantes-loading i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Mensaje cuando no hay variantes */
+        .no-variantes {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            border-radius: 10px;
+            font-style: italic;
+        }
+
+        .no-variantes i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+            color: #c19653;
+        }
+
+        /* Efecto hover mejorado para productos con variantes */
+        .producto-card:has(.producto-variantes-preview):hover {
+            border-color: #c19653;
+            box-shadow: 0 10px 30px rgba(193, 150, 83, 0.25);
+        }
+
+        .producto-card:has(.producto-variantes-preview):hover .producto-badge {
+            background: rgba(193, 150, 83, 1);
+            transform: scale(1.05);
+        }
+
+        /* Indicador visual de que hay variantes */
+        .tiene-variantes {
+            position: relative;
+        }
+
+        .tiene-variantes::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #c19653;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mejoras para el precio de productos con variantes */
+        .producto-card-precio.rango-precios {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* Transiciones suaves */
+        .variante-card * {
+            transition: all 0.3s ease;
+        }
+
+        .producto-badge {
+            transition: all 0.3s ease;
+        }
+
+        .variante-imagen img {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 
@@ -2120,11 +2470,13 @@
         // Variables globales
         let productos = [];
         let categorias = [];
+        let productosVariantes = []; // Nueva variable para almacenar variantes
         let filtros = {
             texto: '',
             categoria: '',
             activos: []
         };
+
 
         // Frases rotativas para el subtítulo
         const frasesRotativas = [
@@ -2261,7 +2613,6 @@
         }
 
 
-        // Cargar datos con mejor manejo de errores
         async function cargarDatos() {
             try {
                 mostrarEstadoCarga();
@@ -2270,12 +2621,21 @@
                 const { data: productosData, error: productosError } = await supabase
                     .from('productos')
                     .select(`
-                            *,
-                            categoria:categorias(id, nombre, descripcion)
-                        `)
+                *,
+                categoria:categorias(id, nombre, descripcion)
+            `)
                     .order('nombre');
 
                 if (productosError) throw productosError;
+
+                // Cargar variantes de productos
+                const { data: variantesData, error: variantesError } = await supabase
+                    .from('producto_variantes')
+                    .select('*')
+                    .eq('activo', true)
+                    .order('producto_id, orden');
+
+                if (variantesError) throw variantesError;
 
                 // Cargar categorías
                 const { data: categoriasData, error: categoriasError } = await supabase
@@ -2286,11 +2646,17 @@
                 if (categoriasError) throw categoriasError;
 
                 productos = productosData || [];
+                productosVariantes = variantesData || [];
                 categorias = categoriasData || [];
+
+                // Asociar variantes a productos
+                productos = productos.map(producto => ({
+                    ...producto,
+                    variantes: productosVariantes.filter(v => v.producto_id === producto.id)
+                }));
 
                 // Cargar categorías en el select de filtros
                 cargarCategoriasBotones();
-
 
                 // Mostrar productos
                 mostrarProductos();
@@ -2300,6 +2666,42 @@
                 console.error('Error al cargar datos:', error);
                 mostrarError('Error al cargar los datos. Por favor, intenta de nuevo más tarde.');
             }
+        }
+        // Función para obtener el precio más bajo de un producto
+        function obtenerPrecioMinimo(producto) {
+            if (!producto.variantes || producto.variantes.length === 0) {
+                return parseFloat(producto.precio || 0);
+            }
+
+            const precios = producto.variantes.map(v => parseFloat(v.precio || 0));
+            return Math.min(...precios);
+        }
+        function obtenerPrecioMaximo(producto) {
+            if (!producto.variantes || producto.variantes.length === 0) {
+                return parseFloat(producto.precio || 0);
+            }
+
+            const precios = producto.variantes.map(v => parseFloat(v.precio || 0));
+            return Math.max(...precios);
+        }
+        // Función para generar texto de precio según variantes
+        function generarTextoPrecio(producto) {
+            if (!producto.variantes || producto.variantes.length === 0) {
+                return formatearPrecio(producto.precio);
+            }
+
+            if (producto.variantes.length === 1) {
+                return formatearPrecio(producto.variantes[0].precio);
+            }
+
+            const precioMin = obtenerPrecioMinimo(producto);
+            const precioMax = obtenerPrecioMaximo(producto);
+
+            if (precioMin === precioMax) {
+                return formatearPrecio(precioMin);
+            }
+
+            return `${formatearPrecio(precioMin)} - ${formatearPrecio(precioMax)}`;
         }
 
         // Cargar categorías en el select con contador
@@ -2372,6 +2774,7 @@
             }
         }
 
+
         function mostrarProductos() {
             let productosFiltrados = [...productos];
 
@@ -2383,7 +2786,12 @@
             if (filtros.texto) {
                 productosFiltrados = productosFiltrados.filter(p =>
                     p.nombre.toLowerCase().includes(filtros.texto.toLowerCase()) ||
-                    (p.descripcion && p.descripcion.toLowerCase().includes(filtros.texto.toLowerCase()))
+                    (p.descripcion && p.descripcion.toLowerCase().includes(filtros.texto.toLowerCase())) ||
+                    // Buscar también en nombres de variantes
+                    (p.variantes && p.variantes.some(v =>
+                        v.nombre_variante.toLowerCase().includes(filtros.texto.toLowerCase()) ||
+                        (v.descripcion_variante && v.descripcion_variante.toLowerCase().includes(filtros.texto.toLowerCase()))
+                    ))
                 );
             }
 
@@ -2392,14 +2800,14 @@
 
             if (productosFiltrados.length === 0) {
                 contenido.innerHTML = `
-                <div class="productos-grid">
-                    <div class="no-results">
-                        <i class="bi bi-search"></i>
-                        <h3>No se encontraron productos</h3>
-                        <p>Intenta ajustar los filtros o términos de búsqueda</p>
-                    </div>
+            <div class="productos-grid">
+                <div class="no-results">
+                    <i class="bi bi-search"></i>
+                    <h3>No se encontraron productos</h3>
+                    <p>Intenta ajustar los filtros o términos de búsqueda</p>
                 </div>
-            `;
+            </div>
+        `;
                 return;
             }
 
@@ -2423,45 +2831,63 @@
                 const emoji = obtenerEmojiCategoria2(cat.nombre);
 
                 html += `
-                <h2 style="margin: 30px 10px 15px; font-size: 1.5rem; color: #c19653;">
-                    ${emoji} ${cat.nombre} <span class="categoria-badge">${productosDeCategoria.length} productos</span>
-                </h2>
-                <div class="productos-grid">
-            `;
+            <h2 style="margin: 30px 10px 15px; font-size: 1.5rem; color: #c19653;">
+                ${emoji} ${cat.nombre} <span class="categoria-badge">${productosDeCategoria.length} productos</span>
+            </h2>
+            <div class="productos-grid">
+        `;
 
                 productosDeCategoria.forEach(producto => {
                     const descripcion = producto.descripcion || 'Delicioso producto de nuestra heladería';
-                    const precioFormateado = formatearPrecio(producto.precio);
-                    html += `
-                    <div class="producto-card" onclick="mostrarDetalle(${producto.id})">
-                    <div class="producto-card-imagen">
-                            ${producto.imagen ?
-                            `<img 
-                                    src="${producto.imagen}" 
-                                    alt="${producto.nombre}" 
-                                    loading="lazy" 
-                                    decoding="async"
-                                    width="100%" height="200"
-                                    style="object-fit: cover; display: block;"
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                                />
+                    const textoPrecio = generarTextoPrecio(producto);
 
-                                <div class="producto-card-placeholder" style="display:none">🍦</div>` :
+                    // Determinar si mostrar badge de variantes
+                    const tieneVariantes = producto.variantes && producto.variantes.length > 1;
+                    const badgeVariantes = tieneVariantes ?
+                        `<div class="producto-badge">${producto.variantes.length} opciones</div>` : '';
+
+                    // Usar la imagen del producto principal o de la primera variante
+                    let imagenProducto = producto.imagen;
+                    if (!imagenProducto && producto.variantes && producto.variantes.length > 0) {
+                        imagenProducto = producto.variantes[0].imagen;
+                    }
+
+                    html += `
+                <div class="producto-card" onclick="mostrarDetalle(${producto.id})">
+                    <div class="producto-card-imagen">
+                        ${badgeVariantes}
+                        ${imagenProducto ?
+                            `<img 
+                                src="${imagenProducto}" 
+                                alt="${producto.nombre}" 
+                                loading="lazy" 
+                                decoding="async"
+                                width="100%" height="200"
+                                style="object-fit: cover; display: block;"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            />
+                            <div class="producto-card-placeholder" style="display:none">🍦</div>` :
                             `<div class="producto-card-placeholder">🍦</div>`
                         }
-                        
-                        </div>
+                    </div>
 
-                        <div class="producto-card-body">
-                            <div class="producto-card-title">${producto.nombre}</div>
-                            <div class="producto-card-descripcion">${descripcion}</div>
-                            <div class="producto-card-footer">
-                                <div class="producto-card-precio">${precioFormateado}</div>
-                                <div class="producto-card-categoria">${cat.nombre}</div>
-                            </div>
+                    <div class="producto-card-body">
+                        <div class="producto-card-title">${producto.nombre}</div>
+                        <div class="producto-card-descripcion">${descripcion}</div>
+                        ${tieneVariantes ?
+                            `<div class="producto-variantes-preview">
+                                <small style="color: #6c757d; font-size: 0.8rem;">
+                                    <i class="bi bi-collection"></i> ${producto.variantes.length} variantes disponibles
+                                </small>
+                            </div>` : ''
+                        }
+                        <div class="producto-card-footer">
+                            <div class="producto-card-precio">${textoPrecio}</div>
+                            <div class="producto-card-categoria">${cat.nombre}</div>
                         </div>
                     </div>
-                `;
+                </div>
+            `;
                 });
 
                 html += '</div>'; // cierre productos-grid
@@ -2476,11 +2902,30 @@
             }
 
             if (productosFiltrados.length > 0) {
-                const precioPromedio = productosFiltrados.reduce((sum, p) => sum + parseFloat(p.precio || 0), 0) / productosFiltrados.length;
+                // Calcular precio promedio considerando variantes
+                let totalPrecios = 0;
+                let contadorPrecios = 0;
+
+                productosFiltrados.forEach(producto => {
+                    if (producto.variantes && producto.variantes.length > 0) {
+                        producto.variantes.forEach(variante => {
+                            totalPrecios += parseFloat(variante.precio || 0);
+                            contadorPrecios++;
+                        });
+                    } else {
+                        totalPrecios += parseFloat(producto.precio || 0);
+                        contadorPrecios++;
+                    }
+                });
+
+                const precioPromedio = contadorPrecios > 0 ? totalPrecios / contadorPrecios : 0;
                 const precioElement = document.getElementById('precio-promedio-valor');
                 const precioContainer = document.getElementById('precio-promedio');
                 if (precioElement && precioContainer) {
-                    precioElement.textContent = precioPromedio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    precioElement.textContent = precioPromedio.toLocaleString('es-ES', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
                     precioContainer.style.display = 'flex';
                 }
             } else {
@@ -2593,29 +3038,35 @@
 
         // Modal
         // Función mejorada para mostrar detalles del producto en el modal
-        // Función mejorada para mostrar detalles del producto en el modal
+
+        // Función actualizada para mostrar detalles con variantes
         function mostrarDetalle(id) {
             const producto = productos.find(p => p.id === id);
             if (!producto) return;
 
             const categoria = producto.categoria || { nombre: 'Sin categoría' };
-            const precioFormateado = formatearPrecio(producto.precio);
 
             const modalBody = document.getElementById('modal-body');
             if (!modalBody) return;
 
-            modalBody.innerHTML = `
+            // Determinar imagen principal
+            let imagenPrincipal = producto.imagen;
+            if (!imagenPrincipal && producto.variantes && producto.variantes.length > 0) {
+                imagenPrincipal = producto.variantes[0].imagen;
+            }
+
+            let html = `
         <div class="modal-producto-container">
             <!-- Sección de imagen -->
             <div class="modal-imagen-section">
-                ${producto.imagen ?
+                ${imagenPrincipal ?
                     `<img 
-                        src="${producto.imagen}" 
+                        src="${imagenPrincipal}" 
                         alt="${producto.nombre}" 
                         class="modal-image"
                         loading="lazy"
                         decoding="async"
-                        onclick="abrirImagenPantallaCompleta('${producto.imagen}', '${producto.nombre}')"
+                        onclick="abrirImagenPantallaCompleta('${imagenPrincipal}', '${producto.nombre}')"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                     />
                     <div class="imagen-clickeable-overlay">
@@ -2632,14 +3083,6 @@
                 <h2 class="modal-producto-titulo">${producto.nombre}</h2>
                 
                 <div class="modal-info-grid">
-                    <div class="modal-info-item">
-                        <i class="bi bi-currency-dollar" style="color: #28a745; font-size: 1.2rem;"></i>
-                        <div class="modal-info-label">Precio:</div>
-                        <div class="modal-info-value">
-                            <span class="modal-precio">${precioFormateado}</span>
-                        </div>
-                    </div>
-                    
                     <div class="modal-info-item">
                         <i class="bi bi-tag" style="color: #6c757d; font-size: 1.2rem;"></i>
                         <div class="modal-info-label">Categoría:</div>
@@ -2660,6 +3103,48 @@
                         <div class="modal-descripcion-texto">${producto.descripcion}</div>
                     </div>
                 ` : ''}
+    `;
+
+            // Mostrar variantes si existen
+            if (producto.variantes && producto.variantes.length > 0) {
+                html += `
+            <div class="modal-variantes-section">
+                <div class="modal-descripcion-titulo" style="margin-bottom: 15px;">
+                    <i class="bi bi-collection" style="color: #c19653;"></i>
+                    ${producto.variantes.length > 1 ? 'Variantes disponibles' : 'Precio'}
+                </div>
+                <div class="variantes-grid">
+        `;
+
+                producto.variantes.forEach((variante, index) => {
+                    const precioFormateado = formatearPrecio(variante.precio);
+
+                    html += `
+                <div class="variante-card" onclick="seleccionarVariante(${producto.id}, ${variante.id})">
+                    ${variante.imagen && variante.imagen !== imagenPrincipal ? `
+                        <div class="variante-imagen">
+                            <img src="${variante.imagen}" alt="${variante.nombre_variante}" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    ` : ''}
+                    <div class="variante-info">
+                        <div class="variante-nombre">${variante.nombre_variante}</div>
+                        ${variante.descripcion_variante ? `
+                            <div class="variante-descripcion">${variante.descripcion_variante}</div>
+                        ` : ''}
+                        <div class="variante-precio">${precioFormateado}</div>
+                    </div>
+                </div>
+            `;
+                });
+
+                html += `
+                </div>
+            </div>
+        `;
+            }
+
+            html += `
             </div>
 
             <!-- Sección de acciones -->
@@ -2671,15 +3156,38 @@
         </div>
     `;
 
+            modalBody.innerHTML = html;
+
             const modal = document.getElementById('modal');
             if (modal) {
                 modal.style.display = 'flex';
-
-                // Prevenir scroll del body cuando el modal está abierto
                 document.body.style.overflow = 'hidden';
             }
         }
 
+        // Función para seleccionar una variante específica
+        function seleccionarVariante(productoId, varianteId) {
+            const variante = productosVariantes.find(v => v.id === varianteId);
+            if (!variante) return;
+
+            // Cambiar imagen principal si la variante tiene una diferente
+            if (variante.imagen) {
+                const imagenModal = document.querySelector('.modal-image');
+                if (imagenModal) {
+                    imagenModal.src = variante.imagen;
+                    imagenModal.onclick = () => abrirImagenPantallaCompleta(variante.imagen, `${productos.find(p => p.id === productoId)?.nombre} - ${variante.nombre_variante}`);
+                }
+            }
+
+            // Resaltar variante seleccionada
+            document.querySelectorAll('.variante-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+
+            // Opcional: mostrar notificación
+            mostrarNotificacion(`Seleccionaste: ${variante.nombre_variante}`, 'info');
+        }
         // NUEVA función para abrir imagen en pantalla completa
         function abrirImagenPantallaCompleta(imagenUrl, nombreProducto) {
             // Crear el modal de pantalla completa
