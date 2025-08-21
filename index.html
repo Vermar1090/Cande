@@ -2704,52 +2704,181 @@
             return `${formatearPrecio(precioMin)} - ${formatearPrecio(precioMax)}`;
         }
 
-        // Cargar categorías en el select con contador
-        function cargarCategoriasBotones() {
-            const contenedor = document.getElementById('categoria-buttons');
-            if (!contenedor) return;
 
-            contenedor.innerHTML = '';
 
-            // Botón de "Todas"
-            const btnTodas = document.createElement('div');
-            btnTodas.className = 'categoria-btn';
-            btnTodas.innerHTML = `<i class="bi bi-grid"></i><span>Todo</span>`;
-            btnTodas.onclick = () => {
-                filtros.categoria = '';
-                mostrarProductos();
-                actualizarFiltrosActivos();
-                mostrarBotonLimpiar();
-                marcarBotonActivo('');
-            };
-            contenedor.appendChild(btnTodas);
+    function cargarCategoriasBotones() {
+    const contenedor = document.getElementById('categoria-buttons');
+    if (!contenedor) return;
 
-            categorias.forEach(categoria => {
-                const emoji = obtenerEmojiCategoria(categoria.nombre);
-                const btn = document.createElement('div');
-                btn.className = 'categoria-btn';
-                btn.innerHTML = `<span>${emoji}</span><span>${categoria.nombre}</span>`;
-                btn.onclick = () => {
-                    filtros.categoria = categoria.id;
-                    mostrarProductos();
-                    actualizarFiltrosActivos();
-                    mostrarBotonLimpiar();
-                    marcarBotonActivo(categoria.id);
+    contenedor.innerHTML = '';
 
-                    // 👇 Scroll suave al área de productos
-                    const seccionProductos = document.getElementById('contenido-productos');
-                    if (seccionProductos) {
-                        const posicion = seccionProductos.offsetTop - 100; // 100px más arriba del elemento
-                        window.scrollTo({
-                            top: posicion,
-                            behavior: 'smooth'
-                        });
-                    }
-                };
-                contenedor.appendChild(btn);
-            });
-
+    // 📊 CONTAR PRODUCTOS Y CALCULAR VALOR POR CATEGORÍA
+    const estadisticasCategoria = {};
+    
+    // Inicializar estadísticas para todas las categorías
+    categorias.forEach(categoria => {
+        estadisticasCategoria[categoria.id] = {
+            cantidadProductos: 0,
+            sumaPrecios: 0
+        };
+    });
+    
+    // Contar productos y sumar precios por categoría
+    productos.forEach(producto => {
+        if (estadisticasCategoria.hasOwnProperty(producto.categoria_id)) {
+            estadisticasCategoria[producto.categoria_id].cantidadProductos++;
+            
+            // Calcular precio del producto (considerando variantes)
+            let precioProducto = 0;
+            if (producto.variantes && producto.variantes.length > 0) {
+                // Si tiene variantes, usar el precio promedio de todas las variantes
+                let sumaVariantes = 0;
+                let contadorVariantes = 0;
+                producto.variantes.forEach(variante => {
+                    const precio = parseFloat(variante.precio || 0);
+                    sumaVariantes += precio;
+                    contadorVariantes++;
+                });
+                precioProducto = contadorVariantes > 0 ? sumaVariantes / contadorVariantes : 0;
+            } else {
+                // Si no tiene variantes, usar precio directo
+                precioProducto = parseFloat(producto.precio || 0);
+            }
+            
+            estadisticasCategoria[producto.categoria_id].sumaPrecios += precioProducto;
         }
+    });
+
+    // 🔢 ORDENAR CATEGORÍAS POR:
+    // 1️⃣ Cantidad de productos (mayor a menor)
+    // 2️⃣ Si empatan, por suma de precios (mayor a menor) - MÁS UTILIDAD
+    const categoriasOrdenadas = categorias
+        .map(categoria => ({
+            ...categoria,
+            cantidadProductos: estadisticasCategoria[categoria.id]?.cantidadProductos || 0,
+            sumaPrecios: estadisticasCategoria[categoria.id]?.sumaPrecios || 0
+        }))
+        .sort((a, b) => {
+            // Primero comparar por cantidad de productos
+            if (b.cantidadProductos !== a.cantidadProductos) {
+                return b.cantidadProductos - a.cantidadProductos;
+            }
+            // Si empatan en cantidad, comparar por suma de precios (más utilidad primero)
+            return b.sumaPrecios - a.sumaPrecios;
+        });
+
+    // 🏷️ CREAR BOTONES ORDENADOS POR CANTIDAD
+    categoriasOrdenadas.forEach((categoria, index) => {
+        const emoji = obtenerEmojiCategoria(categoria.nombre);
+        const btn = document.createElement('div');
+        btn.className = 'categoria-btn';
+        btn.setAttribute('data-categoria-id', categoria.id);
+        
+        // Mostrar nombre, cantidad de productos y valor total
+        btn.innerHTML = `
+            <span>${emoji}</span>
+            <span>${categoria.nombre}</span>
+              `;
+
+        // ✅ Marcar inmediatamente si coincide con el filtro actual
+        if (filtros.categoria === categoria.id) {
+            btn.classList.add('active');
+        }
+
+        btn.onclick = (event) => {
+            // ✅ Primero limpiar todos los botones
+            document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
+            // ✅ Marcar este botón como activo
+            event.currentTarget.classList.add('active');
+
+            filtros.categoria = categoria.id;
+            mostrarProductos();
+            actualizarFiltrosActivos();
+            mostrarBotonLimpiar();
+
+            // Scroll suave al área de productos
+            const seccionProductos = document.getElementById('contenido-productos');
+            if (seccionProductos) {
+                const posicion = seccionProductos.offsetTop - 100;
+                window.scrollTo({
+                    top: posicion,
+                    behavior: 'smooth'
+                });
+            }
+        };
+        contenedor.appendChild(btn);
+    });
+
+    // 🌍 BOTÓN "TODOS" AL FINAL
+    const btnTodas = document.createElement('div');
+    btnTodas.className = 'categoria-btn';
+    btnTodas.setAttribute('data-categoria-id', 'todos');
+    
+    const totalProductos = productos.length;
+    btnTodas.innerHTML = `
+        <i class="bi bi-grid"></i>
+        <span>Todos</span>
+        <small class="categoria-count">(${totalProductos})</small>
+    `;
+
+    // ✅ Marcar como activo si no hay filtro de categoría
+    if (!filtros.categoria || filtros.categoria === '') {
+        btnTodas.classList.add('active');
+    }
+
+    btnTodas.onclick = (event) => {
+        // ✅ Primero limpiar todos los botones
+        document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
+        // ✅ Marcar este botón como activo
+        event.currentTarget.classList.add('active');
+
+        filtros.categoria = '';
+        mostrarProductos();
+        actualizarFiltrosActivos();
+        mostrarBotonLimpiar();
+    };
+    contenedor.appendChild(btnTodas);
+}
+
+
+
+
+
+
+function marcarBotonActivo(categoriaId) {
+    // Remover clase activa de todos los botones
+    const todosLosBotones = document.querySelectorAll('.categoria-btn');
+    todosLosBotones.forEach(btn => btn.classList.remove('active'));
+
+    // Determinar qué botón marcar como activo
+    let selectorBoton;
+    if (categoriaId === '' || categoriaId === 'todos') {
+        // Marcar el botón "Todos"
+        selectorBoton = '[data-categoria-id="todos"]';
+    } else {
+        // Marcar la categoría específica
+        selectorBoton = `[data-categoria-id="${categoriaId}"]`;
+    }
+
+    // Marcar el botón correcto como activo
+    const botonActivo = document.querySelector('.categoria-btn' + selectorBoton);
+    if (botonActivo) {
+        botonActivo.classList.add('active');
+        console.log('Botón marcado como activo:', botonActivo.textContent.trim());
+    } else {
+        console.warn('No se encontró el botón para categoría:', categoriaId);
+    }
+}
+
+// ✅ Función auxiliar para inicializar el estado correcto
+function inicializarEstadoCategorias() {
+    // Marcar "Todos" como activo por defecto si no hay filtro
+    if (!filtros.categoria) {
+        marcarBotonActivo('todos');
+    } else {
+        marcarBotonActivo(filtros.categoria);
+    }
+}
 
         // Resaltar botón activo
         function marcarBotonActivo(categoriaId) {
